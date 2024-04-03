@@ -6,7 +6,6 @@ import { createContext } from "react";
 import firebase from "firebase/compat/app";
 import { initializeApp } from "firebase/app";
 
-
 const firebaseConfig = {
   apiKey: "AIzaSyC0t5DcGer22QtbEFq9R6dZIx5VbVkf0Es",
   authDomain: "devfinds-ravi8130.firebaseapp.com",
