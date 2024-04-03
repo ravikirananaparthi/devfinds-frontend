@@ -22,6 +22,8 @@ const socket = io("https://devfinds-backend.onrender.com/", {
   reconnection: true,
 });
 
+
+
 function App(props) {
   const { isAuthenticated, setUser, setAuth, setLoader } = useContext(Context);
   const [notifications, setNotifications] = useState([]);
