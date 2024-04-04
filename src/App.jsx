@@ -17,6 +17,7 @@ import { io } from "socket.io-client";
 import Dm from "./pages/Dm";
 import Bottom from "./components/Bottom";
 import Proske from "./components/Proske";
+import Googleregister from "./pages/Googleregister";
 
 const socket = io("https://devfinds-backend.onrender.com/", {
   reconnection: true,
@@ -62,6 +63,7 @@ function App(props) {
         <Route path="/userprofile/:userid" element={<Userprofile />} />
         <Route path="/notifications" element={<Notifications />} />
         <Route path="/message" element={<Dm />} />
+        <Route path="/register/google" element={<Googleregister />} />
         
       </Routes>
       <Bottom className="md:hidden" />

@@ -1,22 +1,17 @@
 import React, { useContext, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
+import { FaUser } from "react-icons/fa";
+import { RxCross1 } from "react-icons/rx";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { FaUser } from "react-icons/fa";
 import { Context, auth, googleProvider } from "../main";
-import { RxCross1 } from "react-icons/rx";
 import { signInWithPopup } from "firebase/auth";
-import Googleregister from "./Googleregister";
-function Registration() {
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+
+function Googleregister() {
   const [programmingExperience, setProgrammingExperience] = useState("");
   const [learnedTechnologies, setLearnedTechnologies] = useState([]);
   const [newTechnology, setNewTechnology] = useState("");
-  const [showGoogleRegister, setShowGoogleRegister] = useState(false);
   const { isAuthenticated, setAuth } = useContext(Context);
-
   const programmingExperienceOptions = [
     "0 years",
     "1 year",
@@ -40,37 +35,22 @@ function Registration() {
     }
   };
 
-  const handleFullNameChange = (event) => {
-    setFullName(event.target.value);
-  };
-
-  const handleEmailChange = (event) => {
-    setEmail(event.target.value);
-  };
-
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
-  };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(programmingExperience);
+
     try {
+        const response1 = await signInWithPopup(auth, googleProvider);
+        const user = response1.user;
+        console.log(user);
       const response = await axios.post(
-        `https://devfinds-backend.onrender.com/api/v1/users/new`,
+        "https://devfinds-backend.onrender.com/api/v1/users/new",
         {
-          name: fullName,
-          email,
-          password,
-          image:null,
+            name: user.displayName,
+            email:user.email,
+            password:"ravikiran456",
+            image:user.photoURL,
           programmingExperience,
           learnedTechnologies,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          withCredentials: true,
         }
       );
 
@@ -82,67 +62,23 @@ function Registration() {
         setAuth(false);
       }
     } catch (error) {
-      console.error(error); // Log the error object
+      console.error(error);
       toast.error("Registration failed. Please try again.");
-      setAuth(false);
     }
   };
 
   const handleRemoveTechnology = (indexToRemove) => {
-    setLearnedTechnologies((prevTechnologies) => {
-      // Create a new array excluding the technology at the specified index
-      const updatedTechnologies = prevTechnologies.filter(
-        (_, index) => index !== indexToRemove
-      );
-      return updatedTechnologies;
-    });
+    setLearnedTechnologies((prevTechnologies) =>
+      prevTechnologies.filter((_, index) => index !== indexToRemove)
+    );
   };
-
-  const handleClickgo = () => {
-    setShowGoogleRegister(true);
-  };
-
-  console.log(programmingExperience, learnedTechnologies);
   if (isAuthenticated) return <Navigate to={"/viewposts"} />;
-
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-violet-100 to-emerald-100">
       <div className="p-8 rounded-lg bg-gray-700 max-w-md w-full">
         <FaUser size={50} className="bg-sul rounded-full p-1 mx-auto mb-4" />
-        <h2 className="text-2xl font-bold text-center mb-4">Registration</h2>
+        <h2 className="text-2xl font-bold text-center mb-4">Google Registration</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="space-y-2">
-            <label className="block text-white">
-              Full Name:
-              <input
-                type="text"
-                value={fullName}
-                onChange={handleFullNameChange}
-                placeholder="Enter Full Name"
-                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 bg-white text-black"
-              />
-            </label>
-            <label className="block text-white">
-              Email:
-              <input
-                type="text"
-                value={email}
-                onChange={handleEmailChange}
-                placeholder="Enter Email"
-                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 bg-white text-black"
-              />
-            </label>
-            <label className="block text-white">
-              Set Password:
-              <input
-                type="password"
-                value={password}
-                onChange={handlePasswordChange}
-                placeholder="Enter Password"
-                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 bg-white text-black"
-              />
-            </label>
-          </div>
           <div className="space-y-2">
             <label className="block text-white">
               Programming Experience:
@@ -196,22 +132,7 @@ function Registration() {
               </ul>
             </label>
           </div>
-          <button
-            type="submit"
-            className="w-full p-2 text-white rounded-lg bg-gradient-to-r from-indigo-400 to-cyan-400 hover:from-indigo-200 hover:to-cyan-200"
-          >
-            Register
-          </button>
-
-          <p className="text-center">
-            <p className="text-blue-400">Have an Account ?</p>
-            <Link to="/login" className="text-white hover:underline">
-              or Login
-            </Link>
-          </p>
-        </form>
-        <Link to={'/register/google'}>
-        <button className="mx-16" onClick={handleClickgo}>
+          <button className="mx-16" type='submit'>
           <div className="border-2 bg-white border-gray-700 font-semibold px-5 py-2 rounded-lg flex items-center justify-center hover:bg-blue-500 hover:text-white transition duration-300 ease-in-out">
             <img
               className="h-7 w-7 rounded-full border border-solid border-gray-500 mr-2"
@@ -221,11 +142,17 @@ function Registration() {
             <span className="text-gray-700">Sign up with Google</span>
           </div>
         </button>
-        </Link>
+          <p className="text-center">
+            <p className="text-blue-400">Already have an Account ?</p>
+            <Link to="/login" className="text-white hover:underline">
+              Login
+            </Link>
+          </p>
+        </form>
       </div>
       <div className="h-20 md:h-0"></div>
     </div>
   );
 }
 
-export default Registration;
+export default Googleregister;

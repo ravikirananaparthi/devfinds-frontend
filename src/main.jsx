@@ -5,7 +5,7 @@ import "./index.css";
 import { createContext } from "react";
 import firebase from "firebase/compat/app";
 import { initializeApp } from "firebase/app";
-
+import {getAuth,GoogleAuthProvider,} from 'firebase/auth';
 const firebaseConfig = {
   apiKey: "AIzaSyC0t5DcGer22QtbEFq9R6dZIx5VbVkf0Es",
   authDomain: "devfinds-ravi8130.firebaseapp.com",
@@ -17,6 +17,9 @@ const firebaseConfig = {
 
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
+export const auth=getAuth(app);
+export const googleProvider = new GoogleAuthProvider();
+
 
 export const server = "https://devfinds-backend.onrender.com/";
 
