@@ -15,13 +15,14 @@ export default function Bottom() {
   };
 
   return (
-    <div className="fixed bottom-0 w-full z-10 bg-white md:hidden ">
+    <div className="fixed bottom-0 w-full z-10  md:hidden ">
       {/* Display only on mobile screens */}
       <BottomNavigation
         sx={{ width: "100%" }}
         value={value}
         onChange={handleChange}
-        style={{ justifyContent: "space-around" }} // Apply flex space around between icons
+        style={{ justifyContent: "space-around" }}
+        className="bg-gradient-to-r from-slate-900 to-slate-700" // Apply flex space around between icons
       >
         <Link to={"/viewposts"}>
           <BottomNavigationAction
@@ -33,7 +34,7 @@ export default function Bottom() {
                 className={
                   location.pathname === "/viewposts"
                     ? "text-blue-500"
-                    : "text-black"
+                    : "text-white"
                 }
               />
             }
@@ -49,7 +50,7 @@ export default function Bottom() {
                 className={
                   location.pathname === "/notifications"
                     ? "text-blue-500"
-                    : "text-black"
+                    : "text-white"
                 }
               />
             }
@@ -65,7 +66,7 @@ export default function Bottom() {
                 className={
                   location.pathname === "/message"
                     ? "text-blue-500"
-                    : "text-black"
+                    : "text-white"
                 }
               />
             }

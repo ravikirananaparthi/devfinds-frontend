@@ -28,7 +28,7 @@ const UserList = ({ users }) => {
   };
 
   return (
-    <div className="bg-white p-4 rounded-xl shadow-md mb-4 hidden ">
+    <div className="bg-white p-4 rounded-xl shadow-md mb-4  ">
       <h1 className="text-2xl font-bold mb-4 text-black">Users</h1>
       <button
         className="text-blue-500 cursor-pointer flex items-center"
@@ -37,65 +37,73 @@ const UserList = ({ users }) => {
         <FaAngleDoubleDown
           className={`mr-1 ${fetchUsers ? "rotate-180" : ""}`}
         />
-        Fetch Users
+        Fetched Users
       </button>
-      <div className="grid grid-cols-1 gap-4">
-        {users.map((userItem) => (
-          <div
-            key={userItem._id}
-            className="flex items-center border-b py-2 hover:bg-gray-100 relative"
-          >
-            {userItem.image ? (
-              <img
-                src={userItem.image}
-                alt={userItem.name}
-                className="h-10 w-10 rounded-full object-cover mr-2"
-              />
-            ) : (
-              <FaUserCircle size={50} className="text-gray-500 mr-2" />
-            )}
-            <Link
-              to={`/userprofile/${userItem._id}`}
-              className="text-black font-semibold cursor-pointer"
+      {fetchUsers === true ? (
+        <div className="grid grid-cols-1 gap-4">
+          {users.map((userItem) => (
+            <div
+              key={userItem._id}
+              className="flex items-center border-b py-2 hover:bg-gray-100 relative"
             >
-              {userItem.name}
-            </Link>
-            {userItem._id !== user._id && (
-              <div className="ml-auto flex items-center">
-                {userItem.status === "Friends already" && (
-                  <>
-                    <FaUserCheck className="text-green-500 mr-1" />
-                    <span className="text-green-500">Friends already</span>
-                  </>
-                )}
-                {userItem.status === "Request already sent" && (
-                  <>
-                    <RiUserReceivedFill className="text-blue-500 mr-1" />
-                    <span className="text-blue-500">Request already sent</span>
-                  </>
-                )}
-                {userItem.status === "" && !requestSent[userItem._id] && (
-                  <button
-                    onClick={() => sendFriendRequest(userItem._id)}
-                    className="bg-blue-500 text-white px-4 py-2 rounded-md ml-2"
-                  >
-                    Send Request
-                  </button>
-                )}
-                {requestSent[userItem._id] && (
-                  <button
-                    className="bg-blue-500 text-white px-4 py-2 rounded-md ml-2 flex items-center"
-                    disabled
-                  >
-                    <RiUserReceivedFill className="mr-1" />
-                    Request Sent
-                  </button>
-                )}
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
+              {userItem.image ? (
+                <img
+                  src={userItem.image}
+                  alt={userItem.name}
+                  className="h-10 w-10 rounded-full object-cover mr-2"
+                />
+              ) : (
+                <FaUserCircle
+                  size={50}
+                  className="h-10 w-10 text-gray-500 mr-2"
+                />
+              )}
+
+              <Link
+                to={`/userprofile/${userItem._id}`}
+                className="text-black font-semibold cursor-pointer"
+              >
+                {userItem.name}
+              </Link>
+              {userItem._id !== user._id && (
+                <div className="ml-auto flex items-center">
+                  {userItem.status === "Friends already" && (
+                    <>
+                      <FaUserCheck className="text-green-500 mr-1" />
+                      <span className="text-green-500">Friends already</span>
+                    </>
+                  )}
+                  {userItem.status === "Request already sent" && (
+                    <>
+                      <RiUserReceivedFill className="text-blue-500 mr-1" />
+                      <span className="text-blue-500">
+                        Request already sent
+                      </span>
+                    </>
+                  )}
+                  {userItem.status === "" && !requestSent[userItem._id] && (
+                    <button
+                      onClick={() => sendFriendRequest(userItem._id)}
+                      className="bg-blue-500 text-white px-4 py-2 rounded-md ml-2"
+                    >
+                      Send Request
+                    </button>
+                  )}
+                  {requestSent[userItem._id] && (
+                    <button
+                      className="bg-blue-500 text-white px-4 py-2 rounded-md ml-2 flex items-center"
+                      disabled
+                    >
+                      <RiUserReceivedFill className="mr-1" />
+                      Request Sent
+                    </button>
+                  )}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      ) : null}
     </div>
   );
 };

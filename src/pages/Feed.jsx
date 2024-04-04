@@ -21,6 +21,7 @@ const Feed = () => {
   const [posts, setPosts] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [previousQuery,setPreviousQuery]=useState("");
   const [tof, setTof] = useState("");
   const [filteredUsers, setFilteredUsers] = useState([]);
   const navigate = useNavigate();
@@ -87,7 +88,14 @@ const Feed = () => {
     console.log(query);
     setSearchQuery(query);
     filterPosts(query);
+  // Check if the length of the query is greater than the previous query
+  if (query.length > previousQuery.length) {
     filterUsers(query);
+  }
+
+  // Update the previousQuery value
+  setPreviousQuery(query);
+
   };
 
   const filterPosts = (query) => {
@@ -211,7 +219,7 @@ const Feed = () => {
 
           <div className="p-4 rounded-xl shadow md:col-span-2  ">
             <h1 className="mb-4 text-2xl font-bold text-black">For You</h1>
-            <UserList users={filteredUsers} />
+            {filteredUsers.length>0 ?(<UserList users={filteredUsers} />):null}
             <div className="grid grid-cols-1 gap-4 text-sm md:text-xl ">
               {filteredPosts.map((post) => (
                 <div

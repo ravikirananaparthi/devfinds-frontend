@@ -209,7 +209,7 @@ function Notifications() {
                       <FcLike className="mr-2" />
                     )}
                     {notification.type === "comment" && (
-                      <MdModeComment className="mr-2" />
+                      <MdModeComment className="mr-2 text-black" />
                     )}
                     <p className="text-sm text-gray-700">
                       {notification.message}
@@ -225,6 +225,7 @@ function Notifications() {
           ))}
         </div>
       </div>
+      <div className="h-20 md:h-0"></div>
     </div>
   );
 }

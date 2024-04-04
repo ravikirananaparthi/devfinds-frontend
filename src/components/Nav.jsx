@@ -125,7 +125,7 @@ const Navbar = (props) => {
         {/* Mobile menu */}
         {isOpen && (
           <div className="md:hidden transition duration-300">
-            <div className="flex flex-col items-center mt-4 space-y-2">
+            <div className="flex flex-col items-center mt-4 space-y-5">
               <Link to="/viewposts">
                 <button className="text-white">Home</button>
               </Link>
