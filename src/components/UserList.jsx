@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { FaUserCircle, FaUserCheck } from "react-icons/fa";
+import { FaUserCircle, FaUserCheck, FaAngleDoubleDown } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { Context } from "../main";
 import axios from "axios";
@@ -8,6 +8,7 @@ import { RiUserReceivedFill } from "react-icons/ri";
 const UserList = ({ users }) => {
   const { user } = useContext(Context);
   const [requestSent, setRequestSent] = useState({});
+  const [fetchUsers, setFetchUsers] = useState(false);
 
   const sendFriendRequest = async (userId) => {
     try {
@@ -27,8 +28,17 @@ const UserList = ({ users }) => {
   };
 
   return (
-    <div className="bg-white p-4 rounded-xl shadow-md mb-4">
+    <div className="bg-white p-4 rounded-xl shadow-md mb-4 hidden ">
       <h1 className="text-2xl font-bold mb-4 text-black">Users</h1>
+      <button
+        className="text-blue-500 cursor-pointer flex items-center"
+        onClick={() => setFetchUsers(!fetchUsers)}
+      >
+        <FaAngleDoubleDown
+          className={`mr-1 ${fetchUsers ? "rotate-180" : ""}`}
+        />
+        Fetch Users
+      </button>
       <div className="grid grid-cols-1 gap-4">
         {users.map((userItem) => (
           <div

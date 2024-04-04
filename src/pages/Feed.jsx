@@ -33,9 +33,12 @@ const Feed = () => {
   useEffect(() => {
     // Fetch trending searches
     axios
-      .get("https://devfinds-backend.onrender.com/api/v1/users/trendingsearches", {
-        withCredentials: true,
-      })
+      .get(
+        "https://devfinds-backend.onrender.com/api/v1/users/trendingsearches",
+        {
+          withCredentials: true,
+        }
+      )
       .then((response) => {
         setTrendingSearches(response.data);
       })
@@ -80,6 +83,8 @@ const Feed = () => {
 
   const handleSearchChange = (e) => {
     const query = e.target.value;
+
+    console.log(query);
     setSearchQuery(query);
     filterPosts(query);
     filterUsers(query);
@@ -129,6 +134,7 @@ const Feed = () => {
   if (posts.length === 0) {
     return <Skeletonfeed />;
   }
+  console.log(searchQuery.length);
   return (
     <div className="relative flex items-center justify-center min-h-screen  bg-gray-100 bg-gradient-to-br from-puk via-slate-400 to-puk">
       <div className="container p-4 mx-auto md:p-8 ">
@@ -252,7 +258,7 @@ const Feed = () => {
                       url={post.image}
                       controls={true}
                       width="100%"
-                      height="auto"
+                      height="full"
                       className="mb-4 rounded-lg overflow-hidden"
                       playing={false} // Auto play the video
                       loop={true} // Loop the video
@@ -304,6 +310,7 @@ const Feed = () => {
             </div>
           </div>
         </div>
+        <div className="h-20 md:h-0"></div>
       </div>
     </div>
   );

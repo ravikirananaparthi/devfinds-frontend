@@ -91,7 +91,7 @@ const Skeletonfeed = () => {
                   <div className="h-14 w-14 mr-2 skeleton rounded-full shrink-0 bg-gray-300"></div>
                   <div className="flex flex-col gap-4 b">
                     <div className="skeleton h-4 w-56 bg-gray-300"></div>
-                    <div className="skeleton h-4 lg:w-96 md:w-72 sm:56 bg-gray-300"></div>
+                    <div className="skeleton h-4 lg:w-96 md:w-72 sm:w-56 bg-gray-300"></div>
                   </div>
                 </div>
                 <h2 className="text-lg font-semibold mb-2 text-black  skeleton bg-gray-300"></h2>

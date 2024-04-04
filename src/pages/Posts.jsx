@@ -9,7 +9,8 @@ import { app } from "../main";
 import axios from "axios";
 import LinearProgress from "@mui/material/LinearProgress";
 import { Button, Card, CardContent } from "@mui/material";
-
+import { IoCaretBackCircleSharp } from "react-icons/io5";
+import { Link, Navigate } from "react-router-dom";
 function Posts() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -19,7 +20,7 @@ function Posts() {
   const [previewImage, setPreviewImage] = useState(null);
   const [activeButton, setActiveButton] = useState(0);
   const [tof, setTof] = useState("pic");
-  const [toupload,settoupload]=useState(false);
+  const [toupload, settoupload] = useState(false);
   const handleClick = (index) => {
     setActiveButton(index);
     if (index == 0) {
@@ -61,7 +62,6 @@ function Posts() {
             setImgUrl(downloadURL);
             settoupload(true);
             console.log("File available at", downloadURL);
-            
           });
         }
       );
@@ -99,6 +99,21 @@ function Posts() {
 
   return (
     <div className="flex justify-center items-center h-screen bg-gradient-to-r from-cyan-100 to-orange-100">
+      <div className="absolute top-0 left-0 right-0 flex justify-between items-center px-8 pt-24 cursor-pointer">
+      <Link to={'/viewposts'}>
+        <div className="flex items-center">
+        
+          <IoCaretBackCircleSharp
+            className="text-blue-500 text-3xl cursor-pointer mr-2"
+            onClick={() => handleBackToFeed()}
+          />
+          <h2 className="text-xl font-bold text-black hover:underline">
+            Back to Feed
+          </h2>
+          
+        </div>
+        </Link>
+      </div>
       <Card className="w-full lg:w-2/3 xl:w-1/2 p-8 bg-white shadow-lg rounded-lg">
         <CardContent>
           <h2 className="text-2xl font-bold text-center mb-6">
@@ -186,7 +201,7 @@ function Posts() {
                   style={{ display: "none" }}
                 />
                 <p
-                  className={`transition-colors  px-5 duration-300 ease-in-out rounded-full p-2 ${
+                  className={` transition-colors   pr-10 duration-300 ease-in-out rounded-full p-2 ${
                     activeButton === 3
                       ? "bg-gradient-to-r from-fuchsia-500 to-cyan-500 text-white"
                       : ""
