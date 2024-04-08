@@ -20,8 +20,9 @@ import Proske from "./components/Proske";
 import Googleregister from "./pages/Googleregister";
 import Landing from "./pages/Landing";
 
+const ser='https://devfinds-backend.onrender.com/';
 
-const socket = io('https://devfinds-frontend.vercel.app/', {
+const socket = io(`${ser}`, {
   reconnection: true,
 });
 

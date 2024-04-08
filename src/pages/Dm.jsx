@@ -14,10 +14,10 @@ function Dm() {
   const [showFriendsList, setShowFriendsList] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const socket = useRef();
-
+  const ser='https://devfinds-backend.onrender.com/';
   useEffect(() => {
     if (user) {
-      socket.current = io(`${server}`);
+      socket.current = io(`${ser}`);
       socket.current.emit("add-user", user._id);
     }
   }, [user]);

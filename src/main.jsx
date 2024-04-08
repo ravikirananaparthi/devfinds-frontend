@@ -20,7 +20,7 @@ export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const googleProvider = new GoogleAuthProvider();
 
-export const server = "https://devfinds-frontend.vercel.app/api/v1/";
+export const server = "https://devfinds-backend.onrender.com/api/v1/";
 
 export const Context = createContext({ isAuthenticated: false });
 

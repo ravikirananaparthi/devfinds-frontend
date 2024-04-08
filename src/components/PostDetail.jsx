@@ -14,7 +14,8 @@ import ImageViewer from "react-simple-image-viewer";
 import SkePostdetail from "./SkePostdetail";
 import ReactPlayer from "react-player";
 import { server } from "../main";
-const socket = io(`https://devfinds-frontend.vercel.app/`, {
+const ser='https://devfinds-backend.onrender.com/';
+const socket = io(`${ser}`, {
   reconnection: true,
 });
 
