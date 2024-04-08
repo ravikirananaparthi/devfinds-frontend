@@ -20,6 +20,7 @@ import ReactPlayer from "react-player";
 import Proske from "../components/Proske";
 import { GrTechnology } from "react-icons/gr";
 import { FaUserSecret } from "react-icons/fa";
+import { server } from "../main";
 function Profile() {
   const [user, setUser] = useState(null);
   const [posts, setPosts] = useState([]);
@@ -32,7 +33,7 @@ function Profile() {
   const handlePostToBackend = async (imageUrl) => {
     try {
       const response = await axios.post(
-        "https://devfinds-backend.onrender.com/api/v1/users/profilepic",
+        `${server}users/profilepic`,
         {
           imageUrl, // Send the image URL to the backend
         },
@@ -51,7 +52,7 @@ function Profile() {
     const fetchUser = async () => {
       try {
         const response = await axios.get(
-          "https://devfinds-backend.onrender.com/api/v1/users/me",
+          `${server}users/me`,
           {
             withCredentials: true,
           }
@@ -74,7 +75,7 @@ function Profile() {
       const fetchPosts = async () => {
         try {
           const response = await axios.get(
-            `https://devfinds-backend.onrender.com/api/v1/posts/user/${userId}`,
+            `${server}posts/user/${userId}`,
             {
               withCredentials: true,
             }
@@ -102,7 +103,7 @@ function Profile() {
     e.stopPropagation();
     try {
       await axios.delete(
-        `https://devfinds-backend.onrender.com/api/v1/posts/delete/${postId}`,
+        `${server}posts/delete/${postId}`,
         {
           withCredentials: true,
         }

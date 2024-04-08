@@ -5,6 +5,7 @@ import { io } from "socket.io-client";
 import { Context } from "../main";
 import { IoSearch } from "react-icons/io5";
 import { FaUserCircle } from "react-icons/fa";
+import { server } from "../main";
 function Dm() {
   const { user } = useContext(Context);
   const [friends, setFriends] = useState([]);
@@ -16,7 +17,7 @@ function Dm() {
 
   useEffect(() => {
     if (user) {
-      socket.current = io("https://devfinds-backend.onrender.com/");
+      socket.current = io(`${server}`);
       socket.current.emit("add-user", user._id);
     }
   }, [user]);
@@ -25,7 +26,7 @@ function Dm() {
     const fetchFriends = async () => {
       try {
         const response = await axios.get(
-          "https://devfinds-backend.onrender.com/api/v1/users/friendslist",
+          `${server}users/friendslist`,
           { withCredentials: true }
         );
         setFriends(response.data.friends);

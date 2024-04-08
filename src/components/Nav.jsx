@@ -1,11 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import { IoMenu } from "react-icons/io5";
 import { FaRegBell, FaUserCircle } from "react-icons/fa";
-import { Context, server } from "../main";
+import { Context, auth, server } from "../main";
 import toast from "react-hot-toast";
 import axios from "axios"; // Import axios for making HTTP requests
 import { Link, Navigate } from "react-router-dom";
 import { BiSolidMessageSquareDetail } from "react-icons/bi";
+import logo from '../assets/df.png';
+import { signOut } from "firebase/auth";
 
 const Navbar = (props) => {
   const { user, isAuthenticated, setAuth, loader, setLoader } =
@@ -15,18 +17,24 @@ const Navbar = (props) => {
   const logOutHandler = async () => {
     setLoader(true);
     try {
-      await axios.get(`https://devfinds-backend.onrender.com/api/v1/users/logout`, {
+      // Sign out from Firebase Authentication (if applicable)
+      await signOut(auth);
+  
+      // Send logout request to backend
+      const response = await axios.get(`${server}users/logout`, {
         withCredentials: true,
       });
-      toast.success("Logged Out Successfully");
+  
+      toast.success('Logged Out Successfully');
       setAuth(false);
-      setLoader(false);
+      axios.defaults.headers.common['Authorization'] = '';
     } catch (error) {
-      toast.error(error.response.data.message);
-      setAuth(false);
+      toast.error(error.response?.data?.message || 'Logout failed'); // Handle potential errors
+    } finally {
       setLoader(false);
     }
   };
+  
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -36,11 +44,13 @@ const Navbar = (props) => {
     <nav className="bg-gradient-to-r from-slate-900 to-slate-700 p-4">
       <div className="container mx-auto">
         <div className="flex items-center justify-between ">
-          <div className="flex items-center">
+          <div className="flex items-center bg-transparent">
             <Link to={"/viewposts"}>
-              <span className="font-mono text-xl font-bold md:text-3xl text-white">
-                Dev Finds
-              </span>
+              <img
+                src={logo}
+                alt="Dev Finds Logo"
+                className="h-8 md:h-12"
+              />
             </Link>
           </div>
 

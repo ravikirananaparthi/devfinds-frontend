@@ -6,7 +6,7 @@ import { FaUser } from "react-icons/fa";
 import { Context, auth, googleProvider } from "../main";
 import { RxCross1 } from "react-icons/rx";
 import { signInWithPopup } from "firebase/auth";
-import Googleregister from "./Googleregister";
+import { server } from "../main";
 function Registration() {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
@@ -45,11 +45,11 @@ function Registration() {
   };
 
   const handleEmailChange = (event) => {
-    setEmail(event.target.value);
+    setEmail(event.target.value.trim());
   };
 
   const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
+    setPassword(event.target.value.trim());
   };
 
   const handleSubmit = async (event) => {
@@ -57,7 +57,7 @@ function Registration() {
     console.log(programmingExperience);
     try {
       const response = await axios.post(
-        `https://devfinds-backend.onrender.com/api/v1/users/new`,
+        `${server}users/new`,
         {
           name: fullName,
           email,
@@ -202,15 +202,7 @@ function Registration() {
           >
             Register
           </button>
-
-          <p className="text-center">
-            <p className="text-blue-400">Have an Account ?</p>
-            <Link to="/login" className="text-white hover:underline">
-              or Login
-            </Link>
-          </p>
-        </form>
-        <Link to={'/register/google'}>
+          <Link to={'/register/google'}>
         <button className="mx-16" onClick={handleClickgo}>
           <div className="border-2 bg-white border-gray-700 font-semibold px-5 py-2 rounded-lg flex items-center justify-center hover:bg-blue-500 hover:text-white transition duration-300 ease-in-out">
             <img
@@ -222,6 +214,13 @@ function Registration() {
           </div>
         </button>
         </Link>
+          <p className="text-center">
+            <p className="text-blue-400">Have an Account ?</p>
+            <Link to="/login" className="text-white hover:underline">
+              or Login
+            </Link>
+          </p>
+        </form>
       </div>
       <div className="h-20 md:h-0"></div>
     </div>

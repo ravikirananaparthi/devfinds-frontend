@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Context } from "../main";
 import axios from "axios";
 import { RiUserReceivedFill } from "react-icons/ri";
-
+import { server } from "../main";
 const UserList = ({ users }) => {
   const { user } = useContext(Context);
   const [requestSent, setRequestSent] = useState({});
@@ -13,7 +13,7 @@ const UserList = ({ users }) => {
   const sendFriendRequest = async (userId) => {
     try {
       await axios.post(
-        "https://devfinds-backend.onrender.com/api/v1/users/friendrequest",
+        `${server}users/friendrequest`,
         { requestTo: userId },
         { withCredentials: true }
       );

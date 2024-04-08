@@ -9,6 +9,7 @@ import { ImCross } from "react-icons/im";
 import Skenoti from "./Skenoti";
 import { Link, Navigate } from "react-router-dom";
 import { FaArrowCircleRight } from "react-icons/fa";
+import { server } from "../main";
 function Notifications() {
   const [notifications, setNotifications] = useState([]);
   const [friendRequests, setFriendRequests] = useState([]); // Add state for friend requests
@@ -19,18 +20,19 @@ function Notifications() {
   const [rejected, setRejected] = useState(false);
   const [req, setreq] = useState([]);
   const [posting, setposting] = useState([]);
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
         // Fetch notifications
         const notificationsResponse = await axios.get(
-          "https://devfinds-backend.onrender.com/api/v1/notifications",
+          `${server}notifications`,
           { withCredentials: true }
         );
 
         // Fetch friend requests
         const friendRequestsResponse = await axios.get(
-          "https://devfinds-backend.onrender.com/api/v1/users/receiverequest",
+          `${server}users/receiverequest`,
           { withCredentials: true }
         );
 
@@ -61,7 +63,7 @@ function Notifications() {
   const handleAcceptRequest = async (requestId) => {
     try {
       const response = await axios.post(
-        "https://devfinds-backend.onrender.com/api/v1/users/acceptrequest",
+        `${server}users/acceptrequest`,
         {
           requestBy: requestId,
           status: "Accepted",
@@ -84,7 +86,7 @@ function Notifications() {
   const handleRejectRequest = async (requestId) => {
     try {
       const response = await axios.post(
-        "https://devfinds-backend.onrender.com/api/v1/users/acceptrequest",
+        `${server}users/acceptrequest`,
         {
           requestBy: requestId,
           status: "Rejected",

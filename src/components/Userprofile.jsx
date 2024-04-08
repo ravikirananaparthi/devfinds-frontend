@@ -14,6 +14,7 @@ import Proske from "./Proske";
 import ReactPlayer from "react-player";
 import { GrTechnology } from "react-icons/gr";
 import { FaUserSecret } from "react-icons/fa";
+import { server } from "../main";
 function Userprofile() {
   const [user, setUser] = useState(null);
   const [posts, setPosts] = useState([]);
@@ -25,7 +26,7 @@ function Userprofile() {
     const fetchUser = async () => {
       try {
         const response = await axios.get(
-          `https://devfinds-backend.onrender.com/api/v1/users/${userid}`,
+          `${server}users/${userid}`,
           {
             withCredentials: true,
           }
@@ -45,7 +46,7 @@ function Userprofile() {
       const fetchPosts = async () => {
         try {
           const response = await axios.get(
-            `https://devfinds-backend.onrender.com/api/v1/posts/user/${userid}`,
+            `${server}posts/user/${userid}`,
             {
               withCredentials: true,
             }

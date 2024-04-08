@@ -1,8 +1,9 @@
 import React, { useContext, useState } from "react";
 import { Link, Navigate } from "react-router-dom"; // Import Link component
-import { Context, server } from "../main";
+import { Context, auth, server } from "../main";
 import toast from "react-hot-toast";
 import axios from "axios";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 function Login() {
   // Define state variables for email and password
@@ -32,7 +33,7 @@ function Login() {
     setLoader(true);
     try {
       const { data } = await axios.post(
-        `https://devfinds-backend.onrender.com/api/v1/users/login`,
+        `${server}users/login`,
         {
           email,
           password,
@@ -53,6 +54,33 @@ function Login() {
       setAuth(false);
     }
   };
+  const handleClickGoogleSignIn = async (event) => {
+    event.preventDefault();
+  
+    try {
+      const provider = new GoogleAuthProvider();
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user; 
+  
+      const response = await axios.post(`${server}users/google-login`, {
+        token: user.accessToken, 
+      });
+  
+      if (response.data.success) {
+        localStorage.setItem('token', response.data.token);
+        axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
+        toast.success(response.data.message);
+        setAuth(true); // Assuming setAuth is a state setter for authentication status
+      } else {
+        toast.error(response.data.error);
+        setAuth(false);
+      }
+    } catch (error) {
+      console.error('Error during Google sign-in:', error);
+      toast.error('Login failed. Please try again.');
+    }
+  };
+  
   if (isAuthenticated) return <Navigate to={"/viewposts"} />;
   return (
     <div className="flex justify-center items-center h-screen bg-gradient-to-r from-violet-100 to-emerald-100 text-white">
@@ -90,6 +118,7 @@ function Login() {
             Login
           </button>
         </form>
+ 
         <div className="mt-4">
           <p className="text-center">
             <Link to="/register" className="text-white">
@@ -97,6 +126,16 @@ function Login() {
             </Link>
           </p>
         </div>
+        <button className="mx-16" onClick={handleClickGoogleSignIn}>
+          <div className="border-2 bg-white border-gray-700 font-semibold px-5 py-2 rounded-lg flex items-center justify-center hover:bg-blue-500 hover:text-white transition duration-300 ease-in-out">
+            <img
+              className="h-7 w-7 rounded-full border border-solid border-gray-500 mr-2"
+              src="https://www.transparentpng.com/thumb/google-logo/google-logo-png-icon-free-download-SUF63j.png"
+              alt=""
+            />
+            <span className="text-gray-700">Sign In with Google</span>
+          </div>
+        </button>
       </div>
     </div>
   );

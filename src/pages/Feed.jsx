@@ -16,7 +16,7 @@ import UserList from "../components/UserList";
 import { Context } from "../main";
 import { FaHistory } from "react-icons/fa";
 import Skeletonfeed from "../components/Skeletonfeed";
-
+import { server } from "../main";
 const Feed = () => {
   const [posts, setPosts] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState([]);
@@ -25,17 +25,16 @@ const Feed = () => {
   const [tof, setTof] = useState("");
   const [filteredUsers, setFilteredUsers] = useState([]);
   const navigate = useNavigate();
-  const { isAuthenticated } = useContext(Context);
+  const { isAuthenticated ,fetch} = useContext(Context);
   const [postsFetched, setPostsFetched] = useState(false);
-
   const [trendingSearches, setTrendingSearches] = useState([]);
   const [searchHistory, setSearchHistory] = useState([]);
-
+ 
   useEffect(() => {
     // Fetch trending searches
     axios
       .get(
-        "https://devfinds-backend.onrender.com/api/v1/users/trendingsearches",
+        `${server}users/trendingsearches`,
         {
           withCredentials: true,
         }
@@ -49,7 +48,7 @@ const Feed = () => {
 
     // Fetch search history
     axios
-      .get("https://devfinds-backend.onrender.com/api/v1/users/searchhistory", {
+      .get(`${server}users/searchhistory`,{
         withCredentials: true,
       })
       .then((response) => {
@@ -60,27 +59,28 @@ const Feed = () => {
       });
   }, []);
 
+  const fetchPosts = async () => {
+    try {
+      const response = await axios.get(
+        `${server}users/viewposts`,
+        {
+          withCredentials: true, // Include credentials in the request
+        }
+      );
+
+      setPosts(response.data);
+      setFilteredPosts(response.data);
+      setPostsFetched(true);
+    } catch (error) {
+      console.error("Error fetching posts:", error);
+    }
+  };
+
   useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const response = await axios.get(
-          "https://devfinds-backend.onrender.com/api/v1/users/viewposts",
-          {
-            withCredentials: true, // Include credentials in the request
-          }
-        );
-
-        setPosts(response.data);
-        setFilteredPosts(response.data);
-        console.log(response.data);
-        setPostsFetched(true);
-      } catch (error) {
-        console.error("Error fetching posts:", error);
-      }
-    };
-
-    fetchPosts();
-  }, [postsFetched]);
+    if (fetch==true && !postsFetched) { // Fetch only if needed
+      fetchPosts();
+    }
+  }, [fetch, postsFetched]);
 
   const handleSearchChange = (e) => {
     const query = e.target.value;
@@ -107,7 +107,7 @@ const Feed = () => {
   const filterUsers = async (query) => {
     try {
       const usersResponse = await axios.get(
-        "https://devfinds-backend.onrender.com/api/v1/users/findusers",
+        `${server}users/findusers`,
         {
           withCredentials: true, // Include credentials in the request
           params: { query }, // Send the search query as a query parameter

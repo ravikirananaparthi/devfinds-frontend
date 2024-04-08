@@ -18,15 +18,17 @@ import Dm from "./pages/Dm";
 import Bottom from "./components/Bottom";
 import Proske from "./components/Proske";
 import Googleregister from "./pages/Googleregister";
+import Landing from "./pages/Landing";
 
-const socket = io("https://devfinds-backend.onrender.com/", {
+
+const socket = io('https://devfinds-frontend.vercel.app/', {
   reconnection: true,
 });
 
 
 
 function App(props) {
-  const { isAuthenticated, setUser, setAuth, setLoader } = useContext(Context);
+  const { isAuthenticated, setUser, setAuth, setLoader ,setfetch} = useContext(Context);
   const [notifications, setNotifications] = useState([]);
   const [darkMode, setDarkMode] = useState(false);
   const toggleTheme = () => {
@@ -35,13 +37,14 @@ function App(props) {
   useEffect(() => {
     setLoader(true);
     axios
-      .get(`https://devfinds-backend.onrender.com/api/v1/users/me`, {
+      .get(`${server}users/me`, {
         withCredentials: true,
       })
       .then((res) => {
         setUser(res.data.user);
         setAuth(true);
         setLoader(false);
+        setfetch(true);
       })
       .catch((error) => {
         setUser({});
@@ -64,7 +67,7 @@ function App(props) {
         <Route path="/notifications" element={<Notifications />} />
         <Route path="/message" element={<Dm />} />
         <Route path="/register/google" element={<Googleregister />} />
-        
+        <Route path="/mg1" element={<Landing />} />
       </Routes>
       <Bottom className="md:hidden" />
       <Toaster />

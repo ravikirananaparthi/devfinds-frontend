@@ -11,6 +11,7 @@ import LinearProgress from "@mui/material/LinearProgress";
 import { Button, Card, CardContent } from "@mui/material";
 import { IoCaretBackCircleSharp } from "react-icons/io5";
 import { Link, Navigate } from "react-router-dom";
+import { server } from "../main";
 function Posts() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -76,7 +77,7 @@ function Posts() {
       setLoading(true);
 
       const { data } = await axios.post(
-        "https://devfinds-backend.onrender.com/api/v1/users/posts",
+        `${server}users/posts`,
         { title, description, image: imgurl, tof },
         {
           withCredentials: true,

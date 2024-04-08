@@ -19,7 +19,7 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import ReactPlayer from "react-player";
-
+import { server } from "../main";
 function FriendDM({ friend, onBack, socket }) {
   const { user } = useContext(Context);
   const [message, setMessage] = useState("");
@@ -90,7 +90,7 @@ function FriendDM({ friend, onBack, socket }) {
     const fetchMessages = async () => {
       try {
         const response = await axios.post(
-          "https://devfinds-backend.onrender.com/api/v1/message/getmsg",
+          `${server}message/getmsg`,
           {
             from: user._id,
             to: friend._id,
@@ -124,7 +124,7 @@ function FriendDM({ friend, onBack, socket }) {
       });
 
       const response = await axios.post(
-        "https://devfinds-backend.onrender.com/api/v1/message/addmsg", // Corrected: moved withCredentials in config
+        `${server}message/addmsg`, // Corrected: moved withCredentials in config
         {
           from: user._id, // Corrected: moved inside data object
           to: friend._id,

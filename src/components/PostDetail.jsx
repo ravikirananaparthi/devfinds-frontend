@@ -13,8 +13,8 @@ import { Context } from "../main";
 import ImageViewer from "react-simple-image-viewer";
 import SkePostdetail from "./SkePostdetail";
 import ReactPlayer from "react-player";
-
-const socket = io("https://devfinds-backend.onrender.com/", {
+import { server } from "../main";
+const socket = io(`https://devfinds-frontend.vercel.app/`, {
   reconnection: true,
 });
 
@@ -36,7 +36,7 @@ const PostDetail = () => {
     const fetchPost = async () => {
       try {
         const response = await axios.get(
-          `https://devfinds-backend.onrender.com/api/v1/posts/post/${postId}`,
+          `${server}posts/post/${postId}`,
           {
             withCredentials: true,
           }
@@ -54,7 +54,7 @@ const PostDetail = () => {
   const fetchUserName = async (userId) => {
     try {
       const response = await axios.get(
-        `https://devfinds-backend.onrender.com/api/v1/user/${userId}`
+        `${server}user/${userId}`
       );
       return response.data.name;
     } catch (error) {
@@ -98,7 +98,7 @@ const PostDetail = () => {
   const handleLike = async () => {
     try {
       const response = await axios.put(
-        `https://devfinds-backend.onrender.com/api/v1/posts/like/post/${postId}`,
+        `${server}posts/like/post/${postId}`,
         {},
         {
           withCredentials: true,
@@ -117,7 +117,7 @@ const PostDetail = () => {
   const handleUnlike = async () => {
     try {
       const response = await axios.put(
-        `https://devfinds-backend.onrender.com/api/v1/posts/unlike/post/${postId}`,
+        `${server}posts/unlike/post/${postId}`,
         {},
         {
           withCredentials: true,
@@ -133,7 +133,7 @@ const PostDetail = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        `https://devfinds-backend.onrender.com/api/v1/posts/comment/post/${postId}`,
+        `${server}posts/comment/post/${postId}`,
         { comment },
         {
           withCredentials: true,

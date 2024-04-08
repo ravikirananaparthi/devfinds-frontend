@@ -28,19 +28,19 @@ const Skeletonfeed = () => {
                       Trending Search
                     </p>
                   </div>
-                  <p className="flex items-center mb-2 text-sm lg:text-lg rounded-lg hover:bg-slate-500 skeleton">
+                  <p className="flex items-center mb-2 text-sm lg:text-lg rounded-lg hover:bg-slate-500">
                     <IoTrendingUp size={25} className="mr-2" />
                     <button></button>
                   </p>
-                  <p className="flex items-center mb-2 text-sm lg:text-lg rounded-lg hover:bg-slate-500 skeleton">
+                  <p className="flex items-center mb-2 text-sm lg:text-lg rounded-lg hover:bg-slate-500 ">
                     <IoTrendingUp size={25} className="mr-2" />
                     <button></button>
                   </p>
-                  <p className="flex items-center mb-2 text-sm lg:text-lg rounded-lg hover:bg-slate-500 skeleton">
+                  <p className="flex items-center mb-2 text-sm lg:text-lg rounded-lg hover:bg-slate-500 ">
                     <IoTrendingUp size={25} className="mr-2" />
                     <button></button>
                   </p>
-                  <p className="flex items-center mb-2 text-sm lg:text-lg rounded-lg hover:bg-slate-500 skeleton">
+                  <p className="flex items-center mb-2 text-sm lg:text-lg rounded-lg hover:bg-slate-500 ">
                     <IoTrendingUp size={25} className="mr-2" />
                     <button></button>
                   </p>
@@ -55,19 +55,19 @@ const Skeletonfeed = () => {
                       Search History
                     </p>
                   </div>
-                  <p className="flex items-center mb-2 text-sm lg:text-lg rounded-lg hover:bg-slate-500 skeleton">
+                  <p className="flex items-center mb-2 text-sm lg:text-lg rounded-lg hover:bg-slate-500">
                     <FaHistory size={15} className="mr-2 p-3" />
                     <button></button>
                   </p>
-                  <p className="flex items-center mb-2 text-sm lg:text-lg rounded-lg hover:bg-slate-500 skeleton">
+                  <p className="flex items-center mb-2 text-sm lg:text-lg rounded-lg hover:bg-slate-500 ">
                     <FaHistory size={15} className="mr-2 p-3" />
                     <button></button>
                   </p>
-                  <p className="flex items-center mb-2 text-sm lg:text-lg rounded-lg hover:bg-slate-500 skeleton">
+                  <p className="flex items-center mb-2 text-sm lg:text-lg rounded-lg hover:bg-slate-500 ">
                     <FaHistory size={15} className="mr-2 p-3" />
                     <button></button>
                   </p>
-                  <p className="flex items-center mb-2 text-sm lg:text-lg rounded-lg hover:bg-slate-500 skeleton">
+                  <p className="flex items-center mb-2 text-sm lg:text-lg rounded-lg hover:bg-slate-500 ">
                     <FaHistory size={15} className="mr-2 p-3" />
                     <button></button>
                   </p>
@@ -90,8 +90,8 @@ const Skeletonfeed = () => {
                 <div className="flex items-center mb-2">
                   <div className="h-14 w-14 mr-2 skeleton rounded-full shrink-0 bg-gray-300"></div>
                   <div className="flex flex-col gap-4 b">
-                    <div className="skeleton h-4 w-56 bg-gray-300"></div>
-                    <div className="skeleton h-4 lg:w-96 md:w-72 sm:w-56 bg-gray-300"></div>
+                    <div className="skeleton h-4 w-36 bg-gray-300"></div>
+                    <div className="skeleton h-4 lg:w-96 md:w-72 sm:w-36 bg-gray-300"></div>
                   </div>
                 </div>
                 <h2 className="text-lg font-semibold mb-2 text-black  skeleton bg-gray-300"></h2>
@@ -120,8 +120,8 @@ const Skeletonfeed = () => {
                 <div className="flex items-center mb-2">
                   <div className="h-14 w-14 mr-2 skeleton rounded-full shrink-0 bg-gray-300"></div>
                   <div className="flex flex-col gap-4 b">
-                    <div className="skeleton h-4 w-56 bg-gray-300"></div>
-                    <div className="skeleton h-4 lg:w-96 md:w-72 sm:56 bg-gray-300"></div>
+                    <div className="skeleton h-4 w-36 bg-gray-300"></div>
+                    <div className="skeleton h-4 lg:w-96 md:w-72 sm:36 bg-gray-300"></div>
                   </div>
                 </div>
                 <h2 className="text-lg font-semibold mb-2 text-black  skeleton bg-gray-300"></h2>
@@ -150,8 +150,8 @@ const Skeletonfeed = () => {
                 <div className="flex items-center mb-2">
                   <div className="h-14 w-14 mr-2 skeleton rounded-full shrink-0 bg-gray-300"></div>
                   <div className="flex flex-col gap-4 b">
-                    <div className="skeleton h-4 w-56 bg-gray-300"></div>
-                    <div className="skeleton h-4 lg:w-96 md:w-72 sm:56 bg-gray-300"></div>
+                    <div className="skeleton h-4 w-36 bg-gray-300"></div>
+                    <div className="skeleton h-4 lg:w-96 md:w-72 sm:36 bg-gray-300"></div>
                   </div>
                 </div>
                 <h2 className="text-lg font-semibold mb-2 text-black  skeleton bg-gray-300"></h2>
