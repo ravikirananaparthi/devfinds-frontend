@@ -60,7 +60,7 @@ const UserList = ({ users }) => {
               )}
 
               <Link
-                to={`/userprofile/${userItem._id}`}
+                to={`/app/userprofile/${userItem._id}`}
                 className="text-black font-semibold cursor-pointer"
               >
                 {userItem.name}

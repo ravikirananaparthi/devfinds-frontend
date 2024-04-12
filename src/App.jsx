@@ -1,6 +1,6 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Home from "./pages/Home";
-import Nav from "./components/Nav";
+
 import Profile from "./pages/Profile";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -19,17 +19,17 @@ import Bottom from "./components/Bottom";
 import Proske from "./components/Proske";
 import Googleregister from "./pages/Googleregister";
 import Landing from "./pages/Landing";
+import Navbar from "./components/NavBar.jsx";
 
-const ser='https://devfinds-backend.onrender.com/';
+const ser = import.meta.env.SER || "http://localhost:4000/";
 
 const socket = io(`${ser}`, {
   reconnection: true,
 });
 
-
-
 function App(props) {
-  const { isAuthenticated, setUser, setAuth, setLoader ,setfetch} = useContext(Context);
+  const { isAuthenticated, setUser, setAuth, setLoader, setfetch } =
+    useContext(Context);
   const [notifications, setNotifications] = useState([]);
   const [darkMode, setDarkMode] = useState(false);
   const toggleTheme = () => {
@@ -55,7 +55,17 @@ function App(props) {
   }, [isAuthenticated]);
   return (
     <Router>
-      <Nav toggleTheme={toggleTheme}/>
+      <Routes>
+        <Route path="/" element={<Landing />} />
+        <Route path="/app/*" element={<ProtectedRoutes />} />
+      </Routes>
+    </Router>
+  );
+}
+function ProtectedRoutes() {
+  return (
+    <>
+      <Navbar />
       <Routes>
         <Route path="/home" element={<Home />} />
         <Route path="/profile" element={<Profile />} />
@@ -68,11 +78,10 @@ function App(props) {
         <Route path="/notifications" element={<Notifications />} />
         <Route path="/message" element={<Dm />} />
         <Route path="/register/google" element={<Googleregister />} />
-        <Route path="/mg1" element={<Landing />} />
       </Routes>
-      <Bottom className="md:hidden" />
+      <Bottom />
       <Toaster />
-    </Router>
+    </>
   );
 }
 

@@ -5,8 +5,10 @@ import { GoHomeFill } from "react-icons/go";
 import { BsBellFill } from "react-icons/bs";
 import { IoMail } from "react-icons/io5";
 import { Link, useLocation } from "react-router-dom";
+import { Context } from "../main";
 
 export default function Bottom() {
+  const { isAuthenticated } = React.useContext(Context);
   const [value, setValue] = React.useState("Home");
   const location = useLocation();
 
@@ -24,7 +26,7 @@ export default function Bottom() {
         style={{ justifyContent: "space-around" }}
         className="bg-gradient-to-r from-slate-900 to-slate-700" // Apply flex space around between icons
       >
-        <Link to={"/viewposts"}>
+        <Link to={"/app/viewposts"}>
           <BottomNavigationAction
             label="Home"
             value="Home"
@@ -40,7 +42,7 @@ export default function Bottom() {
             }
           />
         </Link>
-        <Link to={"/notifications"}>
+        <Link to={"/app/notifications"}>
           <BottomNavigationAction
             label="Notifications"
             value="Bell"
@@ -56,7 +58,7 @@ export default function Bottom() {
             }
           />
         </Link>
-        <Link to={"/message"}>
+        <Link to={"/app/message"}>
           <BottomNavigationAction
             label="Messages"
             value="Messages"

@@ -101,7 +101,7 @@ function Posts() {
   return (
     <div className="flex justify-center items-center h-screen bg-gradient-to-r from-cyan-100 to-orange-100">
       <div className="absolute top-0 left-0 right-0 flex justify-between items-center px-8 pt-24 cursor-pointer">
-      <Link to={'/viewposts'}>
+      <Link to={'/app/viewposts'}>
         <div className="flex items-center">
         
           <IoCaretBackCircleSharp

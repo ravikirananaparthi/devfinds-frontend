@@ -6,6 +6,7 @@ import { Context } from "../main";
 import { IoSearch } from "react-icons/io5";
 import { FaUserCircle } from "react-icons/fa";
 import { server } from "../main";
+import Avatar from "@mui/material/Avatar";
 function Dm() {
   const { user } = useContext(Context);
   const [friends, setFriends] = useState([]);
@@ -14,7 +15,7 @@ function Dm() {
   const [showFriendsList, setShowFriendsList] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const socket = useRef();
-  const ser='https://devfinds-backend.onrender.com/';
+  const ser=import.meta.env.SER||  'http://localhost:4000/';
   useEffect(() => {
     if (user) {
       socket.current = io(`${ser}`);
@@ -56,14 +57,14 @@ function Dm() {
     setFilteredFriends(filtered);
   };
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen mt-16">
       {/* Sidebar */}
       <div
         className={`bg-gray-900 p-4 ${
           showFriendsList ? "block" : "hidden"
         } md:block w-full md:w-1/3 overflow-y-auto`}
       >
-        <div className="bg-white rounded-full flex ml-3 mt-3 mb-4 items-center sm:w-full md:w-[190px] md:m-3 lg:w-[350px]">
+        <div className="bg-white rounded-full flex ml-5 mt-3 mb-4 items-center sm:w-full md:w-[190px] md:m-3 lg:w-[350px]">
           <input
             type="text"
             placeholder="Search"
@@ -83,11 +84,7 @@ function Dm() {
                 onClick={() => {handleFriendClick(friend);}}
               >
                 {friend.image ? (
-                  <img
-                    src={friend.image}
-                    alt={friend.name}
-                    className="w-10 h-10 rounded-full mr-2"
-                  />
+                  <Avatar alt="h" src={friend.image} className="mr-2"/>
                 ) : (
                   <FaUserCircle className="w-10 h-10 text-gray-400 mr-2" />
                 )}

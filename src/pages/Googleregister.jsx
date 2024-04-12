@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import { Context, auth } from "../main";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { server } from "../main";
+import l from '../assets/ggg.png';
 function Googleregister() {
   const [programmingExperience, setProgrammingExperience] = useState("");
   const [learnedTechnologies, setLearnedTechnologies] = useState([]);
@@ -78,12 +79,12 @@ function Googleregister() {
       prevTechnologies.filter((_, index) => index !== indexToRemove)
     );
   };
-  if (isAuthenticated) return <Navigate to={"/viewposts"} />;
+  if (isAuthenticated) return <Navigate to={"/app/viewposts"} />;
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-violet-100 to-emerald-100">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-black">
       <div className="p-8 rounded-lg bg-gray-700 max-w-md w-full">
         <FaUser size={50} className="bg-sul rounded-full p-1 mx-auto mb-4" />
-        <h2 className="text-2xl font-bold text-center mb-4">
+        <h2 className="text-2xl font-bold text-center mb-4 text-slate-50">
           Google Registration
         </h2>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -141,10 +142,10 @@ function Googleregister() {
             </label>
           </div>
           <button className="mx-16" type="submit">
-            <div className="border-2 bg-white border-gray-700 font-semibold px-5 py-2 rounded-lg flex items-center justify-center hover:bg-blue-500 hover:text-white transition duration-300 ease-in-out">
+            <div className="border-2 bg-white border-gray-700 font-semibold px-5 py-2 rounded-full flex items-center justify-center hover:bg-blue-500 hover:text-white transition duration-300 ease-in-out">
               <img
-                className="h-7 w-7 rounded-full border border-solid border-gray-500 mr-2"
-                src="https://www.transparentpng.com/thumb/google-logo/google-logo-png-icon-free-download-SUF63j.png"
+                className="h-7 w-7 rounded-full  mr-2"
+                src={l}
                 alt=""
               />
               <span className="text-gray-700">Sign up with Google</span>
@@ -152,7 +153,7 @@ function Googleregister() {
           </button>
           <p className="text-center">
             <p className="text-blue-400">Already have an Account ?</p>
-            <Link to="/login" className="text-white hover:underline">
+            <Link to="/app/login" className="text-white hover:underline">
               Login
             </Link>
           </p>

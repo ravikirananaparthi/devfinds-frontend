@@ -162,7 +162,7 @@ function Profile() {
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-puk via-slate-400 to-puk">
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-          <div className="p-4 bg-gray-700 text-white rounded-lg shadow col-span-1 max-h-[576px] overflow-auto sm:sticky t-0  top-0 z-10">
+          <div className="p-4 bg-gray-700 text-white rounded-lg shadow col-span-1 max-h-[576px] overflow-auto sm:sticky t-0  top-0 mt-20">
             <div className="flex flex-col mb-4 h-5/6">
               <h1 className="text-2xl font-semibold mb-4">User Profile Page</h1>
               <div className="mb-4">
@@ -241,7 +241,7 @@ function Profile() {
               </div>
             </div>
           </div>
-          <div className="p-4 bg-gradient-to-br from-puk via-slate-400 to-puk rounded-lg shadow col-span-2">
+          <div className="p-4 bg-gradient-to-br from-puk via-slate-400 to-puk rounded-lg shadow col-span-2 mt-20">
             <h2 className="text-2xl font-semibold mb-4 text-black">
               Posts Page
             </h2>

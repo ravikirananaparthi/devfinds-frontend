@@ -1,13 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
 import { IoMenu } from "react-icons/io5";
 import { FaRegBell, FaUserCircle } from "react-icons/fa";
-import { Context, auth, server } from "../main";
+import { Context, server } from "../main";
 import toast from "react-hot-toast";
 import axios from "axios"; // Import axios for making HTTP requests
 import { Link, Navigate } from "react-router-dom";
 import { BiSolidMessageSquareDetail } from "react-icons/bi";
-import logo from '../assets/logo2.png';
-import { signOut } from "firebase/auth";
+import logoImage from "../assets/logo2.png";
+import Image from "../assets/logo.png";
+import { TiHome } from 'react-icons/ti';
+import { FaRegMessage } from "react-icons/fa6";
 
 const Navbar = (props) => {
   const { user, isAuthenticated, setAuth, loader, setLoader } =
@@ -17,43 +19,46 @@ const Navbar = (props) => {
   const logOutHandler = async () => {
     setLoader(true);
     try {
-      await signOut(auth);
-      const response = await axios.get(`${server}users/logout`, {
+      await axios.get(`${server}users/logout`, {
         withCredentials: true,
       });
-  
-      toast.success('Logged Out Successfully');
+      toast.success("Logged Out Successfully");
       setAuth(false);
-      axios.defaults.headers.common['Authorization'] = '';
+      setLoader(false);
     } catch (error) {
-      toast.error(error.response?.data?.message || 'Logout failed'); // Handle potential errors
-    } finally {
+      toast.error(error.response.data.message);
+      setAuth(false);
       setLoader(false);
     }
   };
-  
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
-  return (
-    <nav className="bg-gradient-to-r from-slate-900 to-slate-700 p-4">
-      <div className="container mx-auto">
-        <div className="flex items-center justify-between ">
-        <div className="flex items-center bg-transparent font-cinzel text-xl md:text-2xl lg:text-3xl xl:text-4xl text-white">
-      <Link to={"/app/viewposts"}>
-        Dev Finds
-      </Link>
-    </div>
+  const closeSidebar = () => {
+    setIsOpen(false);
+  };
 
-          <label className="md:hidden btn btn-circle swap swap-rotate bg-gray-700 hover:bg-black border-none text-white">
+  return (
+    <nav className="fixed top-0 left-0 right-0 z-10 bg-gradient-to-r from-guv/60 to-jagaur/90 bg-opacity-30 backdrop-filter backdrop-blur-lg p-3">
+      <div className="mx-auto">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center">
+            <Link to={"/app/viewposts"}>
+                <img src={logoImage} alt="Logo" className="h-10 w-24" />
+            </Link>
+          </div>
+
+
+
+          <label className="md:hidden btn btn-circle swap swap-rotate bg-gray-700/10 hover:bg-black/10 border-none text-white z-20">
             {/* this hidden checkbox controls the state */}
             <input type="checkbox" onClick={toggleMenu} />
 
             {/* hamburger icon */}
             <svg
-              className="swap-off fill-current"
+              className="swap-off fill-current z-20"
               xmlns="http://www.w3.org/2000/svg"
               width="20"
               height="20"
@@ -64,7 +69,7 @@ const Navbar = (props) => {
 
             {/* close icon */}
             <svg
-              className="swap-on fill-current"
+              className="swap-on fill-current z-20"
               xmlns="http://www.w3.org/2000/svg"
               width="20"
               height="20"
@@ -73,6 +78,9 @@ const Navbar = (props) => {
               <polygon points="400 145.49 366.51 112 256 222.51 145.49 112 112 145.49 222.51 256 112 366.51 145.49 400 256 289.49 366.51 400 400 366.51 289.49 256 400 145.49" />
             </svg>
           </label>
+
+
+
           <div className="hidden md:flex justify-between items-center space-x-10">
             {isAuthenticated && (
               <>
@@ -125,53 +133,61 @@ const Navbar = (props) => {
             )}
           </div>
         </div>
-        {/* Mobile menu */}
-        {isOpen && (
-          <div className="md:hidden transition duration-300">
-            <div className="flex flex-col items-center mt-4 space-y-5">
-              <Link to="/app/viewposts">
-                <button className="text-white">Home</button>
-              </Link>
-              <Link to="/app/profile" className="nav-profile flex flex-row">
-                {user.image ? (
-                  <img
-                    src={user.image}
-                    className="rounded-full object-cover"
-                    alt="User Profile"
-                    style={{ width: "40px", height: "40px" }}
-                  />
-                ) : (
-                  <FaUserCircle size={25} className="mt-3" />
-                )}
-                <span className="text-white m-3">My Profile</span>
-              </Link>
-              <Link to="/app/notifications">
-                <button className="text-white flex items-center">
-                  <FaRegBell /> <span className="ml-1">Notifications</span>
-                </button>
-              </Link>
-              <Link to="/app/message">
-                <button className="text-white">Messages</button>
-              </Link>
+        {/*large screens*/}
 
-              {isAuthenticated && (
-                <button
-                  onClick={logOutHandler}
-                  className="bg-lime-400 hover:bg-lime-500 text-gray-900 rounded-md px-4 py-2 transition duration-300 ease-in-out"
-                >
-                  Logout
+
+        {/* Mobile menu */}
+
+        <div className={`md:hidden fixed right-0 top-0 bottom-0 h-screen w-[300px] bg-black border-b transition-transform duration-400 ${isOpen ? 'transform translate-x-0' :'transform translate-x-full'}`}>
+          <img src={Image} alt="Logo" className="object-cover" />
+          <div className="flex flex-col items-center space-y-5">
+            <Link to="/app/viewposts" onClick={closeSidebar} className="mr-7">
+            <button className="text-white flex items-center">
+                <TiHome size={25}/> <span className="ml-1">Home</span>
+            </button>
+            </Link>
+            <Link to="/app/profile" className="nav-profile flex flex-row" onClick={closeSidebar}>
+              {user.image ? (
+                <img
+                  src={user.image}
+                  className="rounded-full object-cover"
+                  alt="User Profile"
+                  style={{ width: "40px", height: "40px" }}
+                />
+              ) : (
+                <FaUserCircle size={25} />
+              )}
+              <span className="text-white ml-1">My Profile</span>
+            </Link>
+            <Link to="/app/notifications" onClick={closeSidebar} className="ml-4">
+              <button className="text-white flex items-center">
+                <FaRegBell size={23}/> <span className="ml-1">Notifications</span>
+              </button>
+            </Link>
+            <Link to="/app/message" onClick={closeSidebar } className="">
+              <button className="text-white flex items-center">
+              <FaRegMessage size={20}/><span className="ml-1">Messages</span>
+              </button>
+            </Link>
+
+            {isAuthenticated && (
+              <button
+                onClick={logOutHandler}
+                className="bg-lime-400 hover:bg-lime-500 text-gray-900 rounded-md px-4 py-2 transition duration-300 ease-in-out"
+              >
+                Logout
+              </button>
+            )}
+            {!isAuthenticated && (
+              <Link to={"/app/login"} onClick={closeSidebar}>
+                <button className="bg-lime-400 hover:bg-lime-500 text-gray-900 rounded-md px-4 py-2 transition duration-300 ease-in-out">
+                  Login
                 </button>
-              )}
-              {!isAuthenticated && (
-                <Link to={"/app/login"}>
-                  <button className="bg-lime-400 hover:bg-lime-500 text-gray-900 rounded-md px-4 py-2 transition duration-300 ease-in-out">
-                    Login
-                  </button>
-                </Link>
-              )}
-            </div>
+              </Link>
+            )}
           </div>
-        )}
+        </div>
+      
       </div>
     </nav>
   );

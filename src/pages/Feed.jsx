@@ -127,7 +127,7 @@ const Feed = () => {
   };
 
   const viewPost = async (postId) => {
-    navigate(`/posts/${postId}`);
+    navigate(`/app/posts/${postId}`);
   };
   // Function to extract file name from URL
   const getPostFileName = (url) => {
@@ -145,9 +145,9 @@ const Feed = () => {
   console.log(searchQuery.length);
   return (
     <div className="relative flex items-center justify-center min-h-screen  bg-gray-100 bg-gradient-to-br from-puk via-slate-400 to-puk">
-      <div className="container p-4 mx-auto md:p-8 ">
-        <div className="grid gap-4 md:grid-cols-3 ">
-          <div className="md:col-span-1 h-auto md:h-[5in] lg:max-h-[5in] flex flex-col items-center backdrop-blur-lg bg-gray-700 rounded-xl sm:sticky top-0">
+      <div className="container p-4 mx-auto md:p-8">
+        <div className="grid gap-4 md:grid-cols-3">
+          <div className="md:col-span-1 h-auto md:h-[5in] lg:max-h-[5in] flex flex-col items-center backdrop-blur-lg bg-gray-700 rounded-xl sm:sticky top-0 mt-16">
             <div className="bg-white rounded-full flex ml-3 mt-3 items-center sm:w-full md:w-[190px] md:m-3 lg:w-[350px]">
               <input
                 type="text"
@@ -217,7 +217,7 @@ const Feed = () => {
             </footer>
           </div>
 
-          <div className="p-4 rounded-xl shadow md:col-span-2  ">
+          <div className="md:p-4 rounded-xl shadow md:col-span-2 mt-12 ">
             <h1 className="mb-4 text-2xl font-bold text-black">For You</h1>
             {filteredUsers.length>0 ?(<UserList users={filteredUsers} />):null}
             <div className="grid grid-cols-1 gap-4 text-sm md:text-xl ">
@@ -254,7 +254,7 @@ const Feed = () => {
                         <img
                           src={post.image}
                           alt="Post Image"
-                          className="object-cover  mx-auto rounded-lg object-center"
+                          className="object-cover mx-auto rounded-lg object-center"
                           width={400}
                           height={225}
                         />

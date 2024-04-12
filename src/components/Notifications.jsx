@@ -10,6 +10,7 @@ import Skenoti from "./Skenoti";
 import { Link, Navigate } from "react-router-dom";
 import { FaArrowCircleRight } from "react-icons/fa";
 import { server } from "../main";
+import Avatar from "@mui/material/Avatar";
 function Notifications() {
   const [notifications, setNotifications] = useState([]);
   const [friendRequests, setFriendRequests] = useState([]); // Add state for friend requests
@@ -20,7 +21,7 @@ function Notifications() {
   const [rejected, setRejected] = useState(false);
   const [req, setreq] = useState([]);
   const [posting, setposting] = useState([]);
-  
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -117,7 +118,7 @@ function Notifications() {
 
   return (
     <div className="">
-      <div className="bg-white shadow-lg rounded-lg overflow-hidden w-full md:w-full lg:w-full">
+      <div className="bg-white shadow-lg rounded-lg overflow-hidden w-full md:w-full lg:w-full mt-16">
         <div className="bg-gray-100 p-4 border-b">
           <h2 className="text-lg font-semibold text-black">Notifications</h2>
           <p className="text-gray-700">
@@ -138,7 +139,7 @@ function Notifications() {
                   <img
                     src={request.image}
                     alt="User"
-                    className="w-full h-full rounded-full"
+                    className="w-full h-full rounded-full object-cover"
                   />
                 ) : (
                   <FaUserCircle size={40} />
@@ -147,7 +148,7 @@ function Notifications() {
               <div className="w-full">
                 <div className="flex items-center justify-center mb-2">
                   <p className="text-lg text-black ">
-                    <Link to={`/userprofile/${req[index]}`}>
+                    <Link to={`/app/userprofile/${req[index]}`}>
                       <span className="hover:underline cursor-pointer font-semibold">
                         {request.name}
                       </span>
@@ -188,25 +189,26 @@ function Notifications() {
 
           {/* Display notifications */}
           {notifications?.map((notification, index) => (
-            <Link to={`/posts/${posting[index]}`}>
+            <Link to={`/app/posts/${posting[index]}`}>
               <div
                 key={index}
                 className="flex items-center mb-4 border-t border-b py-4"
               >
-                <div className="rounded-full bg-blue-500 text-white flex items-center justify-center w-10 h-10 mr-3">
+                <div className=" text-white flex items-center justify-center  mr-3">
                   {/* Add image component here */}
                   {notification.image ? (
-                    <img
+                    <Avatar
+                      alt="Remy Sharp"
                       src={notification.image}
-                      alt="User"
-                      className="w-full h-full rounded-full"
+                      sx={{ width: 56, height: 56 }}
                     />
                   ) : (
-                    <FaUserCircle size={40} />
+                    <FaUserCircle size={55} className="text-blue-400" />
                   )}
                 </div>
                 <div className="flex-grow">
-                  <div className="flex items-center">
+                  <div className="flex items-center justify-between">
+                  <div>
                     {notification.type === "like" && (
                       <FcLike className="mr-2" />
                     )}
@@ -215,8 +217,13 @@ function Notifications() {
                     )}
                     <p className="text-sm text-gray-700">
                       {notification.message}
+                    
                     </p>
-                    <FaArrowCircleRight size={35} className="text-black hover:text-gray-400 ml-24"/>
+                    </div>
+                    <FaArrowCircleRight
+                      size={35}
+                      className="text-black hover:text-gray-400 ml-24"
+                    />
                   </div>
                   <p className="text-xs text-gray-500">
                     {moment(notification.createdAt).fromNow()}

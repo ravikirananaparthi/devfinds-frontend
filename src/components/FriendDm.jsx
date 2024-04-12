@@ -12,6 +12,7 @@ import { FaVideo } from "react-icons/fa";
 import { IoDocumentAttach } from "react-icons/io5";
 import validUrl from "valid-url";
 import ImageViewer from "react-simple-image-viewer";
+import Avatar from "@mui/material/Avatar";
 import {
   getStorage,
   ref,
@@ -190,11 +191,7 @@ function FriendDM({ friend, onBack, socket }) {
             <IoMdArrowRoundBack />
           </button>
           {friend.image ? (
-            <img
-              src={friend.image}
-              alt={friend.name}
-              className="w-10 h-10 rounded-full mr-2"
-            />
+            <Avatar alt="h" src={friend.image} className="mr-2"/>
           ) : (
             <FaUserCircle className="w-10 h-10 mr-2 " />
           )}

@@ -14,7 +14,7 @@ import ImageViewer from "react-simple-image-viewer";
 import SkePostdetail from "./SkePostdetail";
 import ReactPlayer from "react-player";
 import { server } from "../main";
-const ser='https://devfinds-backend.onrender.com/';
+const ser=import.meta.env.SER|| 'http://localhost:4000/';
 const socket = io(`${ser}`, {
   reconnection: true,
 });
@@ -195,7 +195,7 @@ const PostDetail = () => {
               )}
               <div>
                 <Link
-                  to={`/userprofile/${post.user._id}`}
+                  to={`/app/userprofile/${post.user._id}`}
                   className="text-black font-semibold cursor-pointer"
                 >
                   {post.user.name}

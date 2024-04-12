@@ -11,7 +11,9 @@ export default {
         sol: "#461959",
         mod: "#FEFBF6",
         mg: "#9F5DE2", // Fuchsia-600
-        pn: "#D946EF", // Pink-600
+        pn: "#D946EF",
+        guv:"#10121E",
+        jagaur:"#070716", // Pink-600
       },
       zIndex: {
         za: "100",
