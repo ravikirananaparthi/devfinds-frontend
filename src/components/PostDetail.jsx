@@ -14,7 +14,7 @@ import ImageViewer from "react-simple-image-viewer";
 import SkePostdetail from "./SkePostdetail";
 import ReactPlayer from "react-player";
 import { server } from "../main";
-const ser=import.meta.env.SER|| 'http://localhost:4000/';
+const ser='https://devfinds-backend.onrender.com';
 const socket = io(`${ser}`, {
   reconnection: true,
 });
