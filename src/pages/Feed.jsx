@@ -144,11 +144,11 @@ const Feed = () => {
   }
   console.log(searchQuery.length);
   return (
-    <div className="relative flex items-center justify-center min-h-screen  bg-gray-100 bg-gradient-to-br from-puk via-slate-400 to-puk">
-      <div className="container p-4 mx-auto md:p-8">
-        <div className="grid gap-4 md:grid-cols-3">
-          <div className="md:col-span-1 h-auto md:h-[5in] lg:max-h-[5in] flex flex-col items-center backdrop-blur-lg bg-gray-700 rounded-xl sm:sticky top-0 mt-16">
-            <div className="bg-white rounded-full flex ml-3 mt-3 items-center sm:w-full md:w-[190px] md:m-3 lg:w-[350px]">
+    <div className="bg-ravi">
+    <div class="sm:overflow-y-auto md:overflow-y-hidden md:flex flex-col md:flex-row h-screen bg-ravi">
+        <div class="md:left md:overflow-y-auto md:w-1/3 m-5 md:my-auto bg-ravi">
+          <div className="h-auto md:h-[5in] lg:max-h-[5in] flex flex-col items-center backdrop-blur-lg bg-chakri rounded-xl sm:sticky mt-20 md:mt-16  ">
+            <div className="bg-white rounded-full flex ml-2 mt-3 items-center md:w-[180px] lg:w-[330px] w-max-full">
               <input
                 type="text"
                 placeholder="Search"
@@ -158,10 +158,10 @@ const Feed = () => {
               />
               <IoSearch size={25} className="cursor-pointer text-black" />
             </div>
-            <div className="flex w-full">
+            <div className="flex w-full justify-between">
               {/* Left side for Trending Search */}
-              <div className="w-1/2 border-r border-gray-600">
-                <div className="p-4 text-white">
+              <div className="w-[15rem] ">
+                <div className="p-4 text-white ">
                   <div className="flex flex-row">
                     <RiFireFill size={25} className="mr-2 text-orange-500" />
                     <p className="text-sm lg:text-lg text-white">
@@ -182,8 +182,11 @@ const Feed = () => {
                   ))}
                 </div>
               </div>
+              <div className="border-r border-gray-600">
 
-              <div className="w-1/2">
+              </div>
+
+              <div className="w-[15rem]">
                 <div className="p-4 text-white">
                   <div className="flex flex-row">
                     <FaHistory size={25} className="mr-2 text-green-500" />
@@ -205,20 +208,21 @@ const Feed = () => {
                 </div>
               </div>
             </div>
-
-            {/* Footer */}
-            <footer className="mt-auto mb-9 flex justify-center">
+              {/* Footer */}
+              <footer className="mt-auto mb-9 flex justify-center">
               <button
                 className="py-2 px-10 md:px-16 lg:px-36 font-bold text-white bg-blue-500 rounded-lg hover:bg-blue-700 transition duration-300 ease-in-out focus:outline-none"
-                onClick={() => navigate("/posts")}
+                onClick={() => navigate("/app/posts")}
               >
                 + Post
               </button>
             </footer>
           </div>
+          </div>
 
-          <div className="md:p-4 rounded-xl shadow md:col-span-2 mt-12 ">
-            <h1 className="mb-4 text-2xl font-bold text-black">For You</h1>
+          <div class="right flex-1 overflow-y-auto md:h-auto bg-ravi">
+            <div className="p-2 md:p-4 rounded-xl m-5 mb-16 md:mb-6 md:mt-20 bg-jaya">
+            <h1 className="mb-4 text-2xl font-bold text-black text-center">For You</h1>
             {filteredUsers.length>0 ?(<UserList users={filteredUsers} />):null}
             <div className="grid grid-cols-1 gap-4 text-sm md:text-xl ">
               {filteredPosts.map((post) => (
@@ -316,10 +320,9 @@ const Feed = () => {
                 </div>
               ))}
             </div>
+            </div>
           </div>
-        </div>
-        <div className="h-20 md:h-0"></div>
-      </div>
+    </div>
     </div>
   );
 };

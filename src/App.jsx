@@ -21,8 +21,9 @@ import Googleregister from "./pages/Googleregister";
 import Landing from "./pages/Landing";
 import Navbar from "./components/NavBar.jsx";
 
-const ser = import.meta.env.SER || "http://localhost:4000/";
+const ser = "https://devfinds-backend.onrender.com";
 
+console.log(import.meta.env.SER);
 const socket = io(`${ser}`, {
   reconnection: true,
 });

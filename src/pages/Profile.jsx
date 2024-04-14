@@ -9,6 +9,7 @@ import { RiDeleteBin5Line } from "react-icons/ri";
 import { GoComment } from "react-icons/go";
 import { FaCirclePlus } from "react-icons/fa6";
 import { app } from "../main";
+import { IoMail } from "react-icons/io5";
 import {
   getStorage,
   ref,
@@ -159,13 +160,18 @@ function Profile() {
   }
   console.log(posts);
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-puk via-slate-400 to-puk">
-      <div className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-          <div className="p-4 bg-gray-700 text-white rounded-lg shadow col-span-1 max-h-[576px] overflow-auto sm:sticky t-0  top-0 mt-20">
+    <div className="bg-gradient-to-br from-ravi via-chakri to-jaya ">
+      <div class="sm:overflow-y-auto md:overflow-y-hidden md:flex flex-col md:flex-row h-screen bg-ravi">
+        <div class="md:left overflow-y-auto md:w-1/3 m-4 md:my-auto ">
+          <div className="p-4 bg-chakri text-white rounded-lg shadow max-h-[576px] overflow-auto sm:sticky mt-28 md:mt-20">
             <div className="flex flex-col mb-4 h-5/6">
-              <h1 className="text-2xl font-semibold mb-4">User Profile Page</h1>
-              <div className="mb-4">
+              <div className=" mb-4 flex justify-between">
+              <h1 className="text-2xl font-semibold">User Profile Page</h1>
+              <div>
+                <IoMail size={32} className="ml-4"/>
+              </div>
+              </div>
+              <div className="mb-4 ">
                 <div style={{ position: "relative", display: "inline-block" }}>
                   {user && user.image ? (
                     <img
@@ -204,7 +210,7 @@ function Profile() {
                   </div>
                 )}
                 {user && (
-                  <ul className="mt-4 text-lg">
+                  <ul className="text-lg gap-1">
                     <li>
                       <span className="font-semibold">Username: </span>
                       <span>{user.name}</span>
@@ -213,13 +219,13 @@ function Profile() {
                       <span>Email: </span>
                       <span>{user.email}</span>
                     </li>
-                    <li className="flex items-center py-2">
+                    <li className="flex items-center ">
                       <SlCalender size={23} className="pr-2" />
                       <span>
                         Joined on {new Date(user.createdAt).toLocaleString()}
                       </span>
                     </li>
-                    <li className="flex items-center py-2">
+                    <li className="flex items-center ">
                       <FaUserSecret size={23} className="pr-2" />
                       <span>
                         Programming Experience: {user?.programmingExperience}
@@ -241,10 +247,12 @@ function Profile() {
               </div>
             </div>
           </div>
-          <div className="p-4 bg-gradient-to-br from-puk via-slate-400 to-puk rounded-lg shadow col-span-2 mt-20">
-            <h2 className="text-2xl font-semibold mb-4 text-black">
+        </div>
+        <div class="right flex-1 overflow-y-auto md:h-auto bg-ravi">
+        <div className="md:p-4 rounded-xl  m-5 mb-24 md:mb-4 md:mt-20 bg-jaya">
+          <h2 className="text-2xl font-semibold mb-4 text-white text-center">
               Posts Page
-            </h2>
+          </h2>
             <div className="grid grid-cols-1 gap-4 text-sm md:text-lg">
               {posts.map((post) => (
                 <div
@@ -348,8 +356,8 @@ function Profile() {
                 </div>
               ))}
             </div>
+            </div>
           </div>
-        </div>
       </div>
       {/* Render popup */}
       {showPopup && (

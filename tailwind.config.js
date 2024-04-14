@@ -13,7 +13,15 @@ export default {
         mg: "#9F5DE2", // Fuchsia-600
         pn: "#D946EF",
         guv:"#10121E",
-        jagaur:"#070716", // Pink-600
+        jagaur:"#070716", 
+        ravi:"#0F2027",
+        chakri:"#203A43",
+        jaya:"#2C5364",
+        a:"#03001e",
+        b:"#7303c0",
+        c:"#ec38bc",
+        d:"#fdeff9",
+        e:"#26D0CE",
       },
       zIndex: {
         za: "100",
@@ -23,6 +31,9 @@ export default {
   daisyui: {
     themes: ["light", "dark", "cupcake"],
   },
-  plugins: [require("daisyui")],
+  plugins: [require("daisyui"),
+
+    ],
+
 
 };

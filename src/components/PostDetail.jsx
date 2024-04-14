@@ -179,10 +179,9 @@ const PostDetail = () => {
   const isLikedByCurrentUser = post.likes.includes(cid);
   console.log(commentsToDisplay);
   return (
-    <div className="flex flex-col min-h-screen bg-gray-100">
-      <div className="flex-grow">
-        <div className="flex items-center justify-center min-h-svh bg-gray-100 ">
-          <div className="max-w-3xl w-full p-8 bg-white rounded-2xl shadow-lg md:h-auto sm:h-svh">
+    <div className="flex flex-col min-h-screen bg-gradient-to-tr from-ravi to-jaya">
+        <div className="flex items-center justify-center ">
+          <div className="mt-20  p-8 m-4 bg-slate-100 rounded-2xl shadow-lg h-full w-[70rem]">
             <div className="flex items-center mb-7">
               {imG ? (
                 <img
@@ -354,7 +353,7 @@ const PostDetail = () => {
             </Transition>
           </div>
         </div>
-      </div>
+      
       <div className="h-20 md:h-0"></div>
     </div>
   );

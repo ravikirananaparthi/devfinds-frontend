@@ -9,7 +9,7 @@ function View({ post, onClose, user }) {
   };
 
   return (
-    <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-75 z-50 overflow-auto">
+    <div className="fixed top-0 left-0  w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-75 z-50 overflow-auto">
       <div className="max-w-3xl w-full p-8 bg-white rounded-2xl shadow-lg max-h-full overflow-y-auto">
         <div className="flex items-center mb-4">
           {post.user.image ? (

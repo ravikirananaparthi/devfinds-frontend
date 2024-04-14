@@ -21,7 +21,9 @@ export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const googleProvider = new GoogleAuthProvider();
 
-export const server =import.meta.env.SERVER || "http://localhost:4000/api/v1/";
+export const server ="https://devfinds-backend.onrender.com/api/v1/";
+
+console.log(server);
 
 export const Context = createContext({ isAuthenticated: false });
 

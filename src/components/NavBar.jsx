@@ -40,6 +40,8 @@ const Navbar = (props) => {
     setIsOpen(false);
   };
 
+  
+
   return (
     <nav className="fixed top-0 left-0 right-0 z-10 bg-gradient-to-r from-guv/60 to-jagaur/90 bg-opacity-30 backdrop-filter backdrop-blur-lg p-3">
       <div className="mx-auto">
@@ -49,9 +51,6 @@ const Navbar = (props) => {
                 <img src={logoImage} alt="Logo" className="h-10 w-24" />
             </Link>
           </div>
-
-
-
           <label className="md:hidden btn btn-circle swap swap-rotate bg-gray-700/10 hover:bg-black/10 border-none text-white z-20">
             {/* this hidden checkbox controls the state */}
             <input type="checkbox" onClick={toggleMenu} />
