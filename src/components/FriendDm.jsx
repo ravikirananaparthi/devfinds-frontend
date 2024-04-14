@@ -183,7 +183,7 @@ function FriendDM({ friend, onBack, socket }) {
   });
   console.log(imageUrls1);
   return (
-    <div className="flex flex-col h-screen w-full">
+    <div className="flex flex-col h-screen w-full z-40">
       <div className="bg-gray-900 p-4 flex items-center justify-between">
         <div className="flex items-center">
           {/* Back Button (visible on small screens) */}

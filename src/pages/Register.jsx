@@ -107,12 +107,12 @@ function Registration() {
   if (isAuthenticated) return <Navigate to={"/app/viewposts"} />;
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-black">
-      <div className="p-8 rounded-lg bg-gray-700 max-w-md w-full">
-        <FaUser size={50} className="bg-sul rounded-full p-1 mx-auto mb-4" />
+    <div className="flex flex-col items-center justify-center h-screen overflow-y-auto bg-gradient-to-br from-ravi via-chakri to-jaya">
+      <div className="p-8 py-3 bg-gray-50/5 w-[22rem] md:w-[30rem] w-max-full max-w-md text-white inset-0 border-2 border-gradient  shadow-puk shadow-inner mt-16">
+        <FaUser size={50} className="bg-sul rounded-full p-1 mx-auto"/>
         <h2 className="text-2xl font-bold text-center mb-4">Registration</h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="space-y-2">
+        <form onSubmit={handleSubmit} className="space-y-1">
+          <div className="space-y-1">
             <label className="block text-white">
               Full Name:
               <input
@@ -120,7 +120,7 @@ function Registration() {
                 value={fullName}
                 onChange={handleFullNameChange}
                 placeholder="Enter Full Name"
-                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 bg-white text-black"
+                className="w-full p-1.5 border border-gray-300 rounded  text-black bg-gradient-to-r from-puk to-slate-400 focus:outline-none focus:border-gray-500 placeholder-black "
               />
             </label>
             <label className="block text-white">
@@ -130,7 +130,7 @@ function Registration() {
                 value={email}
                 onChange={handleEmailChange}
                 placeholder="Enter Email"
-                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 bg-white text-black"
+                className="w-full p-1.5 border border-gray-300 rounded text-black bg-gradient-to-r from-puk to-slate-400 focus:outline-none focus:border-gray-500 placeholder-black "
               />
             </label>
             <label className="block text-white">
@@ -140,17 +140,17 @@ function Registration() {
                 value={password}
                 onChange={handlePasswordChange}
                 placeholder="Enter Password"
-                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 bg-white text-black"
+                className="w-full p-1.5 border border-gray-300 rounded text-black bg-gradient-to-r from-puk to-slate-400 focus:outline-none focus:border-gray-500 placeholder-black "
               />
             </label>
           </div>
-          <div className="space-y-2">
+          <div className="space-y-1">
             <label className="block text-white">
               Programming Experience:
               <select
                 value={programmingExperience}
                 onChange={handleProgrammingExperienceChange}
-                className="block w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 bg-white text-black"
+                className="block w-full p-1.5 border border-gray-300 rounded text-black bg-gradient-to-r from-puk to-slate-400 focus:outline-none focus:border-gray-500 placeholder-black "
               >
                 <option value="">Select</option>
                 {programmingExperienceOptions.map((option, index) => (
@@ -169,28 +169,28 @@ function Registration() {
                   value={newTechnology}
                   onChange={handleLearnedTechnologiesChange}
                   placeholder="Enter Learned Technologies"
-                  className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 bg-white text-black"
+                  className="w-full p-1.5 border border-gray-300 rounded text-black bg-gradient-to-r from-puk to-slate-400 focus:outline-none focus:border-gray-500 placeholder-black "
                 />
                 <button
                   type="button"
                   onClick={handleAddTechnology}
-                  className="ml-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                  className="ml-2 px-4 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
                 >
                   Add
                 </button>
               </div>
-              <ul className="mt-2 flex flex-wrap">
+              <ul className="mt-2 mb-2 flex flex-wrap">
                 {learnedTechnologies.map((tech, index) => (
                   <li
                     key={index}
-                    className="text-white flex items-center mr-2 mb-2 bg-gray-500 rounded-full px-3 py-1"
+                    className="text-white flex items-center mr-2 mb-1 bg-gray-500 rounded-full px-3 py-1"
                   >
                     <span>{tech}</span>
                     <button
                       onClick={() => handleRemoveTechnology(index)}
                       className="ml-1 focus:outline-none"
                     >
-                      <RxCross1 size={20} />
+                      <RxCross1 size={12} />
                     </button>
                   </li>
                 ))}
@@ -199,15 +199,15 @@ function Registration() {
           </div>
           <button
             type="submit"
-            className="w-full p-2 text-white rounded-lg bg-gradient-to-r from-indigo-400 to-cyan-400 hover:from-indigo-200 hover:to-cyan-200"
+            className="bg-gradient-to-r from-puk to-indigo-300 font-semibold hover:bg-gradient-to-br hover:from-indigo-400 hover:to-cyan-400 text-black rounded-lg p-2  w-full"
           >
             Register
           </button>
           <Link to={'/app/register/google'}>
-        <button className="mx-16 mt-4" onClick={handleClickgo}>
-          <div className="border-2 bg-white border-gray-700 font-semibold px-5 py-2 rounded-full flex items-center justify-center hover:bg-blue-500 hover:text-white transition duration-300 ease-in-out">
+        <button className="mx-auto mt-4 flex justify-center" onClick={handleClickgo}>
+          <div className=" border-2 bg-gradient-to-r from-puk to-indigo-300 border-gray-700 font-semibold px-5 py-2 rounded-full flex items-center justify-center hover:bg-gradient-to-br hover:from-indigo-400 hover:to-cyan-400 transition duration-300 ease-in-out">
             <img
-              className="h-7 w-7 rounded-full -2"
+              className="h-7 w-7 rounded-full mr-2"
               src={l}
               alt=""
             />
@@ -217,7 +217,7 @@ function Registration() {
         </Link>
           <p className="text-center">
             <p className="text-blue-400">Have an Account ?</p>
-            <Link to="/app/login" className="text-white hover:underline">
+            <Link to="/app/login" className="text-e r p-1 underline">
               or Login
             </Link>
           </p>

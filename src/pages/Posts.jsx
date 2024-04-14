@@ -12,6 +12,8 @@ import { Button, Card, CardContent } from "@mui/material";
 import { IoCaretBackCircleSharp } from "react-icons/io5";
 import { Link, Navigate } from "react-router-dom";
 import { server } from "../main";
+import "../index.css";
+
 function Posts() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -99,11 +101,22 @@ function Posts() {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gradient-to-r from-cyan-100 to-orange-100">
+    <div className="flex justify-center items-center h-screen area">
+      <ul class="circles">
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
       <div className="absolute top-0 left-0 right-0 flex justify-between items-center px-8 pt-24 cursor-pointer">
       <Link to={'/app/viewposts'}>
         <div className="flex items-center">
-        
           <IoCaretBackCircleSharp
             className="text-blue-500 text-3xl cursor-pointer mr-2"
             onClick={() => handleBackToFeed()}

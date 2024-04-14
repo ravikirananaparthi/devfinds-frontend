@@ -15,7 +15,7 @@ function Dm() {
   const [showFriendsList, setShowFriendsList] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const socket = useRef();
-  const ser=import.meta.env.SER||  'http://localhost:4000/';
+  const ser="https://devfinds-backend.onrender.com";
   useEffect(() => {
     if (user) {
       socket.current = io(`${ser}`);
@@ -57,7 +57,7 @@ function Dm() {
     setFilteredFriends(filtered);
   };
   return (
-    <div className="flex h-screen mt-16">
+    <div className="flex h-screen mt-16 -z-40">
       {/* Sidebar */}
       <div
         className={`bg-gray-900 p-4 ${
