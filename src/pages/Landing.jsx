@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Link as ScrollLink } from "react-scroll";
 import ss from "../assets/ss.jpg";
 import jh from "../assets/Jn.jpg";
+import jonfrt from './assets/jonfrt.jpg';
 import fl from "../assets/flutter.jpg";
 import dv from "../assets/finaldev.jpg";
 import dvp from "../assets/m1.png";
@@ -285,33 +286,19 @@ export default function Landing() {
                     from others.
                   </p>
                 </div>
-                {/* Display images */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-1">
-                  {/* First Image */}
-                  <div className="mx-auto max-w-full md:max-w-[700px] overflow-hidden">
-                    <img
-                      src={ss}
-                      alt="Description of the image"
-                      className="object-cove w-full h-[450px] rounded-lg"
-                    />
-                  </div>
-                  {/* Second Image */}
-                  <div className="mx-auto max-w-full md:max-w-[700px] overflow-hidden">
-                    <img
-                      src={jh}
-                      alt="Description of the second image"
-                      className="object-cove w-full h-[450px] rounded-lg"
-                    />
-                  </div>
-                  {/* Third Image */}
-                  <div className="mx-auto max-w-full md:max-w-[700px] overflow-hidden">
-                    <img
-                      src={fl}
-                      alt="Description of the third image"
-                      className="object-cove w-full h-[450px] rounded-lg"
-                    />
-                  </div>
-                </div>
+                <div className="flex justify-between">
+  <div className="w-1/3 bg-gray-200 p-4 rounded-lg relative mr-4"> 
+    <img src={jonfrt} className="absolute top-0 left-0 w-8 h-8 rounded-full" alt="Profile Picture" />
+    {/* Card content goes here */}
+  </div>
+  <div className="w-1/3 bg-gray-200 p-4 rounded-lg mr-4">
+    {/* Card content goes here */}
+  </div>
+  <div className="w-1/3 bg-gray-200 p-4 rounded-lg">
+    {/* Card content goes here */}
+  </div>
+</div>
+
               </div>
             </section>
           </main>
