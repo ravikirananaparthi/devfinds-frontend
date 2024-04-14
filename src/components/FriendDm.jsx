@@ -13,6 +13,9 @@ import { IoDocumentAttach } from "react-icons/io5";
 import validUrl from "valid-url";
 import ImageViewer from "react-simple-image-viewer";
 import Avatar from "@mui/material/Avatar";
+import moment from "moment";
+import { Link } from "react-router-dom";
+
 import {
   getStorage,
   ref,
@@ -226,7 +229,8 @@ function FriendDM({ friend, onBack, socket }) {
                     )}
                   </div>
                 </div>
-                {validUrl.isUri(msg.message) ? (
+                { typeof msg.message === "string" ? 
+                (validUrl.isUri(msg.message) ? (
                   <>
                     {(tof1 = getPostFileName(msg.message))}
                     {tof1 && /\.(jpeg|jpg|gif|png)$/i.test(tof1) ? (
@@ -280,6 +284,48 @@ function FriendDM({ friend, onBack, socket }) {
                   <div className="chat-bubble chat-bubble-primary text-white">
                     {msg.message}
                   </div>
+                )):(
+                  <Link to={`/app/posts/${msg.message._id}`}>
+                    <div className="bg-white rounded-xl shadow-xl cursor-pointer p-6 grid grid-cols-1 gap-4 text-sm md:text-xl">
+                      <div className="flex items-center mb-2">
+                        {msg.message.user.image ? (
+                          <Avatar
+                            alt="h"
+                            src={msg.message.user.image}
+                            className="mr-2"
+                          />
+                        ) : (
+                          <FaUserCircle className="h-9 w-9 mr-2" />
+                        )}
+                        <div>
+                          <p className="text-black text-lg font-semibold">
+                            {msg.message.user.name}
+                          </p>
+                          <p className="text-gray-500 text-sm ml-auto">
+                            {moment(msg.message.createdAt).fromNow()}
+                          </p>
+                        </div>
+                      </div>
+                      {msg.message.tof === "pic" && msg.message.image && (
+                        <img
+                          className="w-40 h-40 object-cover rounded-lg mb-2"
+                          src={msg.message.image}
+                          alt="Post Image"
+                        />
+                      )}
+                      <h3 className="text-xl font-semibold mb-2 text-black">
+                        {msg.message.title}
+                      </h3>
+                      <p className="text-gray-700">
+                        {msg.message.description.split(" ").length > 15
+                          ? `${msg.message.description
+                              .split(" ")
+                              .slice(0, 15)
+                              .join(" ")} ...`
+                          : msg.message.description}
+                      </p>
+                    </div>
+                  </Link>
                 )}
               </div>
             ))}

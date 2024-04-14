@@ -17,28 +17,27 @@ import { Context } from "../main";
 import { FaHistory } from "react-icons/fa";
 import Skeletonfeed from "../components/Skeletonfeed";
 import { server } from "../main";
+import Share from "../components/Share";
 const Feed = () => {
   const [posts, setPosts] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [previousQuery,setPreviousQuery]=useState("");
+  const [previousQuery, setPreviousQuery] = useState("");
   const [tof, setTof] = useState("");
   const [filteredUsers, setFilteredUsers] = useState([]);
   const navigate = useNavigate();
-  const { isAuthenticated ,fetch} = useContext(Context);
+  const { isAuthenticated, fetch } = useContext(Context);
   const [postsFetched, setPostsFetched] = useState(false);
   const [trendingSearches, setTrendingSearches] = useState([]);
   const [searchHistory, setSearchHistory] = useState([]);
- 
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [sharingpost, sets] = useState([]);
   useEffect(() => {
     // Fetch trending searches
     axios
-      .get(
-        `${server}users/trendingsearches`,
-        {
-          withCredentials: true,
-        }
-      )
+      .get(`${server}users/trendingsearches`, {
+        withCredentials: true,
+      })
       .then((response) => {
         setTrendingSearches(response.data);
       })
@@ -48,7 +47,7 @@ const Feed = () => {
 
     // Fetch search history
     axios
-      .get(`${server}users/searchhistory`,{
+      .get(`${server}users/searchhistory`, {
         withCredentials: true,
       })
       .then((response) => {
@@ -61,12 +60,9 @@ const Feed = () => {
 
   const fetchPosts = async () => {
     try {
-      const response = await axios.get(
-        `${server}users/viewposts`,
-        {
-          withCredentials: true, // Include credentials in the request
-        }
-      );
+      const response = await axios.get(`${server}users/viewposts`, {
+        withCredentials: true, // Include credentials in the request
+      });
 
       setPosts(response.data);
       setFilteredPosts(response.data);
@@ -77,7 +73,8 @@ const Feed = () => {
   };
 
   useEffect(() => {
-    if (fetch==true && !postsFetched) { // Fetch only if needed
+    if (fetch == true && !postsFetched) {
+      // Fetch only if needed
       fetchPosts();
     }
   }, [fetch, postsFetched]);
@@ -88,14 +85,13 @@ const Feed = () => {
     console.log(query);
     setSearchQuery(query);
     filterPosts(query);
-  // Check if the length of the query is greater than the previous query
-  if (query.length > previousQuery.length) {
-    filterUsers(query);
-  }
+    // Check if the length of the query is greater than the previous query
+    if (query.length > previousQuery.length) {
+      filterUsers(query);
+    }
 
-  // Update the previousQuery value
-  setPreviousQuery(query);
-
+    // Update the previousQuery value
+    setPreviousQuery(query);
   };
 
   const filterPosts = (query) => {
@@ -106,13 +102,10 @@ const Feed = () => {
   };
   const filterUsers = async (query) => {
     try {
-      const usersResponse = await axios.get(
-        `${server}users/findusers`,
-        {
-          withCredentials: true, // Include credentials in the request
-          params: { query }, // Send the search query as a query parameter
-        }
-      );
+      const usersResponse = await axios.get(`${server}users/findusers`, {
+        withCredentials: true, // Include credentials in the request
+        params: { query }, // Send the search query as a query parameter
+      });
       const users = usersResponse.data;
       console.log(users);
       setFilteredUsers(users);
@@ -129,6 +122,13 @@ const Feed = () => {
   const viewPost = async (postId) => {
     navigate(`/app/posts/${postId}`);
   };
+  const handleShare = async (post, e) => {
+    e.stopPropagation();
+    console.log("im clicked");
+    sets(post);
+    setDrawerOpen(true);
+
+  };
   // Function to extract file name from URL
   const getPostFileName = (url) => {
     const segments = url.split("/");
@@ -139,13 +139,16 @@ const Feed = () => {
   console.log(filteredUsers);
   console.log(searchHistory);
   console.log(trendingSearches);
+  const handleClosePopup = () => {
+    setDrawerOpen(false);
+  };
   if (posts.length === 0) {
     return <Skeletonfeed />;
   }
   console.log(searchQuery.length);
   return (
     <div className="bg-ravi">
-    <div class="sm:overflow-y-auto md:overflow-y-hidden md:flex flex-col md:flex-row h-screen bg-ravi">
+      <div class="sm:overflow-y-auto md:overflow-y-hidden md:flex flex-col md:flex-row h-screen bg-ravi">
         <div class="md:left md:overflow-y-auto md:w-1/3 m-5 md:my-auto bg-ravi">
           <div className="h-auto md:h-[5in] lg:max-h-[5in] flex flex-col items-center backdrop-blur-lg bg-chakri rounded-xl sm:sticky mt-20 md:mt-16  ">
             <div className="bg-white rounded-full flex ml-2 mt-3 items-center md:w-[180px] lg:w-[330px] w-max-full">
@@ -182,9 +185,7 @@ const Feed = () => {
                   ))}
                 </div>
               </div>
-              <div className="border-r border-gray-600">
-
-              </div>
+              <div className="border-r border-gray-600"></div>
 
               <div className="w-[15rem]">
                 <div className="p-4 text-white">
@@ -208,8 +209,8 @@ const Feed = () => {
                 </div>
               </div>
             </div>
-              {/* Footer */}
-              <footer className="mt-auto mb-9 flex justify-center">
+            {/* Footer */}
+            <footer className="mt-auto mb-9 flex justify-center">
               <button
                 className="py-2 px-10 md:px-16 lg:px-36 font-bold text-white bg-blue-500 rounded-lg hover:bg-blue-700 transition duration-300 ease-in-out focus:outline-none"
                 onClick={() => navigate("/app/posts")}
@@ -218,12 +219,16 @@ const Feed = () => {
               </button>
             </footer>
           </div>
-          </div>
+        </div>
 
-          <div class="right flex-1 overflow-y-auto md:h-auto bg-ravi">
-            <div className="p-2 md:p-4 rounded-xl m-5 mb-16 md:mb-6 md:mt-20 bg-jaya">
-            <h1 className="mb-4 text-2xl font-bold text-black text-center">For You</h1>
-            {filteredUsers.length>0 ?(<UserList users={filteredUsers} />):null}
+        <div class="right flex-1 overflow-y-auto md:h-auto bg-ravi">
+          <div className="p-2 md:p-4 rounded-xl m-5 mb-16 md:mb-6 md:mt-20 bg-jaya">
+            <h1 className="mb-4 text-2xl font-bold text-black text-center">
+              For You
+            </h1>
+            {filteredUsers.length > 0 ? (
+              <UserList users={filteredUsers} />
+            ) : null}
             <div className="grid grid-cols-1 gap-4 text-sm md:text-xl ">
               {filteredPosts.map((post) => (
                 <div
@@ -314,15 +319,16 @@ const Feed = () => {
                     <FaShare
                       size={20}
                       className="text-blue-500 cursor-pointer"
-                      onClick={() => {}}
+                      onClick={(e) => handleShare(post, e)}
                     />
                   </div>
                 </div>
               ))}
             </div>
-            </div>
           </div>
-    </div>
+        </div>
+        {drawerOpen && <Share onClose={handleClosePopup} post={sharingpost}/>}
+      </div>
     </div>
   );
 };
