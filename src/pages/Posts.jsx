@@ -128,7 +128,7 @@ function Posts() {
         </div>
         </Link>
       </div>
-      <Card className="w-full lg:w-2/3 xl:w-1/2 p-8 bg-white shadow-lg rounded-lg">
+      <Card className="w-full lg:w-2/3 xl:w-1/2 p-8 bg-white shadow-lg rounded-lg mt-10 z-10">
         <CardContent>
           <h2 className="text-2xl font-bold text-center mb-6">
             Create a New Post
@@ -158,7 +158,7 @@ function Posts() {
                   style={{ display: "none" }}
                 />
                 <p
-                  className={`transition-colors px-10 duration-300 ease-in-out rounded-full p-2 ${
+                  className={`transition-colors px-5 md:px-10 duration-300 ease-in-out rounded-full p-2 ${
                     activeButton === 0
                       ? "bg-gradient-to-r from-fuchsia-500 to-cyan-500 text-white"
                       : ""
@@ -177,7 +177,7 @@ function Posts() {
                   style={{ display: "none" }}
                 />
                 <p
-                  className={`transition-colors px-10 duration-300 ease-in-out rounded-full p-2 ${
+                  className={`transition-colors px-5 md:px-10 duration-300 ease-in-out rounded-full p-2 ${
                     activeButton === 1
                       ? "bg-gradient-to-r from-fuchsia-500 to-cyan-500 text-white"
                       : ""
