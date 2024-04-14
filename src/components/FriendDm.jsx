@@ -14,8 +14,6 @@ import validUrl from "valid-url";
 import ImageViewer from "react-simple-image-viewer";
 import Avatar from "@mui/material/Avatar";
 import moment from "moment";
-import { Link } from "react-router-dom";
-
 import {
   getStorage,
   ref,
@@ -24,6 +22,7 @@ import {
 } from "firebase/storage";
 import ReactPlayer from "react-player";
 import { server } from "../main";
+import { Link } from "react-router-dom";
 function FriendDM({ friend, onBack, socket }) {
   const { user } = useContext(Context);
   const [message, setMessage] = useState("");
@@ -133,6 +132,7 @@ function FriendDM({ friend, onBack, socket }) {
           from: user._id, // Corrected: moved inside data object
           to: friend._id,
           message: message,
+          messageType: "text",
         },
         { withCredentials: true } // Corrected: moved outside the data object
       );
@@ -185,16 +185,17 @@ function FriendDM({ friend, onBack, socket }) {
     }
   });
   console.log(imageUrls1);
+  console.log(messages);
   return (
-    <div className="flex flex-col h-screen w-full z-40">
-      <div className="bg-gray-900 p-4 flex items-center justify-between">
+    <div className="flex flex-col h-screen w-full">
+      <div className="bg-gray-900 p-4 flex items-center justify-between ">
         <div className="flex items-center">
           {/* Back Button (visible on small screens) */}
           <button onClick={onBack} className="text-blue-500 md:hidden mr-2">
             <IoMdArrowRoundBack />
           </button>
           {friend.image ? (
-            <Avatar alt="h" src={friend.image} className="mr-2"/>
+            <Avatar alt="h" src={friend.image} className="mr-2" />
           ) : (
             <FaUserCircle className="w-10 h-10 mr-2 " />
           )}
@@ -229,62 +230,64 @@ function FriendDM({ friend, onBack, socket }) {
                     )}
                   </div>
                 </div>
-                { typeof msg.message === "string" ? 
-                (validUrl.isUri(msg.message) ? (
-                  <>
-                    {(tof1 = getPostFileName(msg.message))}
-                    {tof1 && /\.(jpeg|jpg|gif|png)$/i.test(tof1) ? (
-                      <img
-                        src={msg.message}
-                        alt="Uploaded"
-                        className="max-w-56 max-h-56 object-contain rounded-lg border-8 border-indigo-500"
-                        onClick={() => openImageViewer(index)}
-                      />
-                    ) : null}
-                    {tof1 && /\.(mp4|ogg|webm)$/i.test(tof1) ? (
-                      <ReactPlayer
-                        url={msg.message}
-                        controls={true}
-                        width="60%"
-                        height="auto"
-                        className="mb-4"
-                        playing={false} // Auto play the video
-                        loop={false} // Loop the video
-                        muted={false} // Mute the video
-                        pip={true} // Picture-in-Picture mode
-                        config={{
-                          youtube: {
-                            playerVars: { showinfo: 1 }, // YouTube player options
-                          },
-                        }}
-                      />
-                    ) : null}
-                    {tof1 &&
-                    /\.(pdf|doc|docx|xls|xlsx|ppt|pptx)$/i.test(tof1) ? (
-                      <a
-                        href={msg.message}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className=" bg-indigo-400 border-8 border-indigo-500 rounded-lg text-white"
-                      >
-                        {tof1}
-                      </a>
-                    ) : null}
-                    {isViewerOpen && (
-                      <ImageViewer
-                        src={imageUrls1}
-                        currentIndex={currentImage}
-                        disableScroll={false}
-                        closeOnClickOutside={true}
-                        onClose={closeImageViewer}
-                      />
-                    )}
-                  </>
+
+                {typeof msg.message === "string" ? (
+                  validUrl.isUri(msg.message) ? (
+                    <>
+                      {(tof1 = getPostFileName(msg.message))}
+                      {tof1 && /\.(jpeg|jpg|gif|png)$/i.test(tof1) ? (
+                        <img
+                          src={msg.message}
+                          alt="Uploaded"
+                          className="max-w-56 max-h-56 object-contain rounded-lg border-8 border-indigo-500"
+                          onClick={() => openImageViewer(index)}
+                        />
+                      ) : null}
+                      {tof1 && /\.(mp4|ogg|webm)$/i.test(tof1) ? (
+                        <ReactPlayer
+                          url={msg.message}
+                          controls={true}
+                          width="60%"
+                          height="auto"
+                          className="mb-4"
+                          playing={false} // Auto play the video
+                          loop={false} // Loop the video
+                          muted={false} // Mute the video
+                          pip={true} // Picture-in-Picture mode
+                          config={{
+                            youtube: {
+                              playerVars: { showinfo: 1 }, // YouTube player options
+                            },
+                          }}
+                        />
+                      ) : null}
+                      {tof1 &&
+                      /\.(pdf|doc|docx|xls|xlsx|ppt|pptx)$/i.test(tof1) ? (
+                        <a
+                          href={msg.message}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className=" bg-indigo-400 border-8 border-indigo-500 rounded-lg text-white"
+                        >
+                          {tof1}
+                        </a>
+                      ) : null}
+                      {isViewerOpen && (
+                        <ImageViewer
+                          src={imageUrls1}
+                          currentIndex={currentImage}
+                          disableScroll={false}
+                          closeOnClickOutside={true}
+                          onClose={closeImageViewer}
+                        />
+                      )}
+                    </>
+                  ) : (
+                    <div className="chat-bubble chat-bubble-primary text-white">
+                      {msg.message}
+                    </div>
+                  )
                 ) : (
-                  <div className="chat-bubble chat-bubble-primary text-white">
-                    {msg.message}
-                  </div>
-                )):(
                   <Link to={`/app/posts/${msg.message._id}`}>
                     <div className="bg-white rounded-xl shadow-xl cursor-pointer p-6 grid grid-cols-1 gap-4 text-sm md:text-xl">
                       <div className="flex items-center mb-2">
@@ -334,7 +337,10 @@ function FriendDM({ friend, onBack, socket }) {
 
         {/* Message Input */}
         <div className="flex items-center relative">
-          <form onSubmit={handleSendMessage} className="  flex-grow flex mb-11 md:mb-0">
+          <form
+            onSubmit={handleSendMessage}
+            className="  flex-grow flex mb-11 md:mb-0"
+          >
             <textarea
               value={message}
               onChange={handleMessageChange}
@@ -348,7 +354,7 @@ function FriendDM({ friend, onBack, socket }) {
               <TiAttachment size={30} />
             </button>
             {attachmentMenuOpen && (
-              <div className="absolute bottom-14 right-0 bg-white p-2 rounded-lg h-[250px] w-[400px] shadow-lg">
+              <div className="absolute bottom-14 right-0 bg-white p-2 rounded-lg h-[250px] w-[370px] md:w-[400px] shadow-lg ">
                 <div className="cursor-pointer  mb-7 mt-10 flex flex-col space-y-7 ml-7 text-black">
                   <label className="cursor-pointer flex items-center">
                     <input

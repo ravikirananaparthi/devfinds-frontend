@@ -4,21 +4,27 @@ import axios from "axios";
 import { Context, server } from "../main";
 import { FaUserCircle } from "react-icons/fa";
 import Avatar from "@mui/material/Avatar";
+import { FaRegCircleCheck } from "react-icons/fa6";
+
 function Share({ post, onClose }) {
   const { user } = useContext(Context);
   const [friends, setFriends] = useState([]);
   const [filteredFriends, setFilteredFriends] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const cid = user._id; // State for search query
-console.log(post);
+
   useEffect(() => {
     const fetchFriends = async () => {
       try {
         const response = await axios.get(`${server}users/friendslist`, {
           withCredentials: true,
         });
-        setFriends(response.data.friends);
-        setFilteredFriends(response.data.friends);
+        const initialFilteredFriends = response.data.friends.map((friend) => ({
+          ...friend,
+          sent: false, // Add sent property to track if the post has been sent
+        }));
+        setFriends(initialFilteredFriends);
+        setFilteredFriends(initialFilteredFriends);
       } catch (error) {
         console.error("Error fetching friends:", error);
       }
@@ -39,7 +45,8 @@ console.log(post);
     e.stopPropagation();
     onClose();
   };
-  const sendPostToFriend = async (friendId, post) => {
+
+  const sendPostToFriend = async (friendId, post, index) => {
     console.log(friendId, post);
     try {
       const response = await axios.post(`${server}message/addmsg`, {
@@ -50,18 +57,21 @@ console.log(post);
       }, {
         withCredentials: true, // Move the withCredentials to the correct parameter
       });
-  
+
       console.log('Post shared successfully:', response.data);
+      const updatedFriends = [...filteredFriends];
+      updatedFriends[index].sent = true; // Mark the friend as sent
+      setFilteredFriends(updatedFriends);
       // You can add logic here to handle successful sharing of the post
     } catch (error) {
       console.error("Error sharing post:", error);
       // You can add logic to handle errors
     }
   };
-  
+
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-gray-700 backdrop-blur-lg  rounded-t-xl shadow-lg p-4 transition-transform transform translate-y-0 h-[550px] md:h-[500px]">
-      <div className="bg-white rounded-full flex ml-5 mt-3 mb-4 items-center sm:w-full md:w-[190px] md:m-3 lg:w-[350px]"></div>
+    <div className="fixed bottom-0  md:h-lhv md md:left-0 bg-gray-700 backdrop-blur-lg  rounded-t-xl shadow-lg p-4 transition-transform transform translate-y-0 w-full md:w-[25rem] xl:w-[33.25rem]  h-[550px] max-h-full md:h-[40rem] ">
+
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-lg font-semibold text-white">Share with Friends</h2>
         <button
@@ -84,7 +94,8 @@ console.log(post);
           </svg>
         </button>
       </div>
-      <div className="bg-white rounded-full flex ml-5 mt-3 mb-4 items-center sm:w-full md:w-[190px] md:m-3 lg:w-[350px]">
+      <div className="flex justify-center items-center">
+      <div className="bg-white rounded-full flex justify-center items-center mb-4 w-[20rem] m-3 px-2">
         <input
           type="text"
           placeholder="Search"
@@ -94,11 +105,12 @@ console.log(post);
         />
         <IoSearch size={25} className="cursor-pointer" />
       </div>
-      <div className="overflow-y-auto max-h-[400px] pb-20">
+      </div>
+      <div className="overflow-y-auto max-h-[400px] pb-20 md:pb-0">
         {/* List of friends */}
-        {filteredFriends.map((friend) => (
+        {filteredFriends.map((friend, index) => (
           <div
-            key={friend.id} // Assuming each friend has a unique ID
+            key={friend._id} // Assuming each friend has a unique ID
             className="flex items-center py-2  cursor-pointer"
           >
             {friend.image ? (
@@ -107,10 +119,12 @@ console.log(post);
               <FaUserCircle className="w-10 h-10 text-blue-400 mr-2" />
             )}
             <span className="text-white">{friend.name}</span>
-            <button className="bg-blue-500 text-white px-9 py-1 rounded-md ml-auto mr-7 hover:bg-blue-800"
-             onClick={() => sendPostToFriend(friend._id,post)}
+            <button
+              className={`text-white px-9 py-1 rounded-md ml-auto mr-7  ${friend.sent ? 'bg-green-500 px-[2.5rem]' : 'bg-blue-500'} ${friend.sent ? 'opacity-50 cursor-not-allowed' : ''}`}
+              onClick={() => sendPostToFriend(friend._id, post, index)}
+              disabled={friend.sent}
             >
-              Send
+              {friend.sent ? <FaRegCircleCheck size={24}/>:'send'}
             </button>
           </div>
         ))}
@@ -119,4 +133,7 @@ console.log(post);
     </div>
   );
 }
+
 export default Share;
+
+
