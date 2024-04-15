@@ -345,8 +345,10 @@ export default function Landing() {
       <div className="text-gray-700 whitespace-normal mt-2">
         <p className="text-left">
         As a Cloud Engineer deeply entrenched in the realm of cloud technology, I've seen firsthand the transformative power it holds for businesses of all sizes. Today, I want to open up a discussion and poll regarding two titans in the cloud computing arena: AWS (Amazon Web Services) and Azure (Microsoft Azure).
-        </p>
-        <BarList data={datahero} className="mx-auto max-w-sm" />
+        </p>       
+      </div>
+      <div className="mt-3">
+      <BarList data={datahero} className="mx-auto max-w-sm" />
       </div>
     </div>
    
