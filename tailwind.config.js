@@ -1,6 +1,7 @@
-/** @type {import('tailwindcss').Config} */
-export default {
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+const colors = require('tailwindcss/colors');
+
+module.exports = {
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}", "./node_modules/@tremor/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
       colors: {
@@ -26,14 +27,41 @@ export default {
       zIndex: {
         za: "100",
       },
+      'dark-tremor': {
+        brand: {
+          faint: '#0B1229',
+          muted: colors.blue[950],
+          subtle: colors.blue[800],
+          DEFAULT: colors.blue[500],
+          emphasis: colors.blue[400],
+          inverted: colors.blue[950],
+        },
+        background: {
+          muted: '#131A2B',
+          subtle: colors.gray[800],
+          DEFAULT: colors.gray[900],
+          emphasis: colors.gray[300],
+        },
+        border: {
+          DEFAULT: colors.gray[800],
+        },
+        ring: {
+          DEFAULT: colors.gray[800],
+        },
+        content: {
+          subtle: colors.gray[600],
+          DEFAULT: colors.gray[500],
+          emphasis: colors.gray[200],
+          strong: colors.gray[50],
+          inverted: colors.gray[950],
+        },
+      },
     },
   },
   daisyui: {
     themes: ["light", "dark", "cupcake"],
   },
-  plugins: [require("daisyui"),
-
-    ],
-
-
+  plugins: [
+    require("daisyui"),
+  ],
 };

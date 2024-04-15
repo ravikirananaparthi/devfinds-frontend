@@ -3,7 +3,11 @@ import { Link } from "react-router-dom";
 import { Link as ScrollLink } from "react-scroll";
 import ss from "../assets/ss.jpg";
 import jh from "../assets/Jn.jpg";
-import jonfrt from './assets/jonfrt.jpg';
+import jonfrt from "../assets/jonfrt.jpg";
+import jngo from "../assets/jngo.png"
+import { BarList } from '@tremor/react';
+import wter from "../assets/wter.jpeg";
+import ttt from "../assets/ttt.jpeg";
 import fl from "../assets/flutter.jpg";
 import dv from "../assets/finaldev.jpg";
 import dvp from "../assets/m1.png";
@@ -88,7 +92,11 @@ export default function Landing() {
       image: mc,
     },
   ];
-
+  const datahero = [
+    { name: 'Aws', value: 456 },
+    { name: 'Azure', value: 351 },
+  
+  ]
   return (
     <motion.div
       className="bg-black text-white min-h-screen flex flex-col"
@@ -286,18 +294,65 @@ export default function Landing() {
                     from others.
                   </p>
                 </div>
-                <div className="flex justify-between">
-  <div className="w-1/3 bg-gray-200 p-4 rounded-lg relative mr-4"> 
-    <img src={jonfrt} className="absolute top-0 left-0 w-8 h-8 rounded-full" alt="Profile Picture" />
-    {/* Card content goes here */}
+                <div className="md:flex justify-between">
+                <div className="w-full md:w-1/3 bg-gray-200 p-4 rounded-lg flex items-start mb-4 md:mr-4"> 
+    <img src={jonfrt} className="w-10 h-10 rounded-full mr-2" alt="Profile Picture" />
+    <div>
+      <div className="flex items-center">
+        <span className="text-black font-sans font-semibold">John Doe</span>
+      </div>
+      <p className="text-black mt-0 mr-40">Software Engineer</p>
+      <div className="text-gray-700 whitespace-normal mt-2">
+        <p className="text-left">
+          In the vibrant world of Flutter, I've sculpted sleek interfaces and
+          breathed life into dynamic mobile apps, relishing the harmony of Dart's
+          simplicity and Flutter's power. Flutter's hot reload is my creative pulse,
+          allowing rapid iteration and seamless debugging. Embrace the Flutter
+          community; forums, blogs, and GitHub repositories are treasure troves of
+          wisdom. Dive into official documentation and tutorials for a structured
+          learning path. Flutter's widget-based architecture empowers creativity;
+          experiment fearlessly to unlock its full potential. Flutter's journey is
+          as much about learning as it is about building; celebrate every milestone
+          and setback as steps towards mastery. Flutter isn't just a framework;
+          it's a passport to crafting delightful user experiences that resonate across
+          platforms and devices.
+        </p>
+      </div>
+    </div>
   </div>
-  <div className="w-1/3 bg-gray-200 p-4 rounded-lg mr-4">
-    {/* Card content goes here */}
+  <div className="w-full md:w-1/3 bg-gray-200 p-4 rounded-lg flex items-start mb-4 md:mr-4">
+  <img src={ttt} className="w-10 h-10 rounded-full mr-2" alt="Profile Picture" />
+  <div>
+      <div className="flex items-center">
+        <span className="text-black font-sans font-semibold">Hwa Young</span>
+      </div>
+      <p className="text-black mt-0 mr-40">Data Analyst</p>
+      <div className="text-gray-700 whitespace-normal mt-2">
+        <p className="text-left">
+        In the realm of Django for just a month, I've journeyed through a maze of models, views, and templates, each unveiling a new layer of web development magic. Embrace the errors, they're breadcrumbs leading to mastery. Django's documentation is a treasure map; follow it diligently. Build not just websites, but ecosystems where data flows gracefully and user experiences shine. With Django, every line of code is a brushstroke in crafting digital art; wield it with intention and creativity.
+        </p>
+        <img src={jngo} className="w-max rounded-xl h-44 mt-4" />
+      </div>
+    </div>
   </div>
-  <div className="w-1/3 bg-gray-200 p-4 rounded-lg">
-    {/* Card content goes here */}
+  <div className="w-full md:w-1/3 bg-gray-200 p-4 rounded-lg flex items-start mb-4 md:mr-4">
+  <img src={wter} className="w-10 h-10 rounded-full mr-2" alt="Profile Picture" />
+  <div>
+      <div className="flex items-center">
+        <span className="text-black font-sans font-semibold">Amelia</span>
+      </div>
+      <p className="text-black mr-40">Cloud Engineer</p>
+      <div className="text-gray-700 whitespace-normal mt-2">
+        <p className="text-left">
+        As a Cloud Engineer deeply entrenched in the realm of cloud technology, I've seen firsthand the transformative power it holds for businesses of all sizes. Today, I want to open up a discussion and poll regarding two titans in the cloud computing arena: AWS (Amazon Web Services) and Azure (Microsoft Azure).
+        </p>
+        <BarList data={datahero} className="mx-auto max-w-sm" />
+      </div>
+    </div>
+   
   </div>
 </div>
+
 
               </div>
             </section>
