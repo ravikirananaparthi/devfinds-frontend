@@ -24,6 +24,7 @@ export default {
         ravi:"#0F2027",
         chakri:"#203A43",
         jaya:"#2C5364",
+        turp:"#C6F6D5",
         a:"#03001e",
         b:"#7303c0",
         c:"#ec38bc",

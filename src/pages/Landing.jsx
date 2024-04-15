@@ -5,10 +5,13 @@ import ss from "../assets/ss.jpg";
 import jh from "../assets/Jn.jpg";
 import jonfrt from "../assets/jonfrt.jpg";
 import jngo from "../assets/jngo.png"
+import { FaRegCommentAlt } from "react-icons/fa";
+import { TbShare3 } from "react-icons/tb";
 import { BarList } from '@tremor/react';
 import wter from "../assets/wter.jpeg";
 import ttt from "../assets/ttt.jpeg";
 import fl from "../assets/flutter.jpg";
+import { FcLike } from "react-icons/fc";
 import dv from "../assets/finaldev.jpg";
 import dvp from "../assets/m1.png";
 import dsvp from "../assets/kk.png";
@@ -95,6 +98,7 @@ export default function Landing() {
   const datahero = [
     { name: 'Aws', value: 456 },
     { name: 'Azure', value: 351 },
+    {name:'Google Cloud Platform',value:98},
   
   ]
   return (
@@ -317,6 +321,14 @@ export default function Landing() {
           it's a passport to crafting delightful user experiences that resonate across
           platforms and devices.
         </p>
+        <div className="mt-6 flex items-center">
+  <FcLike className="mr-1 md:mr-2" />
+  <p className="">1.1m</p>
+  <FaRegCommentAlt className="ml-12 md:ml-14" />
+  <TbShare3  className="ml-20 md:ml-20"/>
+</div>
+
+
       </div>
     </div>
   </div>
@@ -333,6 +345,12 @@ export default function Landing() {
         </p>
         <img src={jngo} className="w-max rounded-xl h-44 mt-4" />
       </div>
+      <div className="mt-6 flex items-center">
+  <FcLike className="mr-1 md:mr-2" />
+  <p className="">796K</p>
+  <FaRegCommentAlt className="ml-12 md:ml-14" />
+  <TbShare3  className="ml-20 md:ml-20"/>
+</div>
     </div>
   </div>
   <div className="w-full md:w-1/3 bg-gray-200 p-4 rounded-lg flex items-start mb-4 md:mr-4">
@@ -348,8 +366,16 @@ export default function Landing() {
         </p>       
       </div>
       <div className="mt-3">
-      <BarList data={datahero} className="mx-auto max-w-sm" />
-      </div>
+      <BarList data={datahero} barColor="turp" className="mx-auto max-w-sm h-52 text-black p-4 rounded-lg shadow-md" /></div>
+      <div className="mt-20 flex items-center">
+  <FcLike className="mr-1 md:mr-2" />
+  <p className="">500k</p>
+  <FaRegCommentAlt className="ml-12 md:ml-14" />
+  <TbShare3  className="ml-20 md:ml-20"/>
+</div>
+
+
+
     </div>
    
   </div>
