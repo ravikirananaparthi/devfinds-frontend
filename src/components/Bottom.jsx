@@ -5,10 +5,11 @@ import { GoHomeFill } from "react-icons/go";
 import { BsBellFill } from "react-icons/bs";
 import { IoMail } from "react-icons/io5";
 import { Link, useLocation } from "react-router-dom";
+import { FaFireAlt } from "react-icons/fa";
 import { Context } from "../main";
 
 export default function Bottom() {
-  const { isAuthenticated } = React.useContext(Context);
+  const { isAuthenticated, t } = React.useContext(Context);
   const [value, setValue] = React.useState("Home");
   const location = useLocation();
 
@@ -17,14 +18,20 @@ export default function Bottom() {
   };
 
   return (
-    <div className="fixed bottom-0 w-full z-10  md:hidden ">
+    <div
+      className="fixed bottom-0 w-full z-10  md:hidden "
+      data-theme={t.includes("light") ? "light" : "night"}
+    >
       {/* Display only on mobile screens */}
       <BottomNavigation
         sx={{ width: "100%" }}
         value={value}
         onChange={handleChange}
-        style={{ justifyContent: "space-around" }}
-        className="bg-gradient-to-r from-slate-900 to-slate-700" // Apply flex space around between icons
+        style={{
+          justifyContent: "space-around",
+          backgroundColor: t === "light" ? "white" : "black",
+        }}
+        // Apply flex space around between icons
       >
         <Link to={"/app/viewposts"}>
           <BottomNavigationAction
@@ -34,9 +41,25 @@ export default function Bottom() {
               <GoHomeFill
                 size={25}
                 className={
-                  location.pathname === "/viewposts"
-                    ? "text-blue-500"
-                    : "text-white"
+                  location.pathname === "/app/viewposts"
+                    ? ("text-blue-500")
+                    : t === "dark" && "text-gray-500"
+                }
+              />
+            }
+          />
+        </Link>
+        <Link to={"/app/trending"}>
+          <BottomNavigationAction
+            label="Notifications"
+            value="Bell"
+            icon={
+              <FaFireAlt
+                size={25}
+                className={
+                  location.pathname === "/app/trending"
+                    ? ("text-blue-500")
+                    : t === "dark" && "text-gray-500"
                 }
               />
             }
@@ -50,9 +73,9 @@ export default function Bottom() {
               <BsBellFill
                 size={25}
                 className={
-                  location.pathname === "/notifications"
-                    ? "text-blue-500"
-                    : "text-white"
+                  location.pathname === "/app/notifications"
+                    ? ("text-blue-500")
+                    : t === "dark" && "text-gray-500"
                 }
               />
             }
@@ -66,9 +89,9 @@ export default function Bottom() {
               <IoMail
                 size={25}
                 className={
-                  location.pathname === "/message"
-                    ? "text-blue-500"
-                    : "text-white"
+                  location.pathname === "/app/message"
+                    ? ("text-blue-500")
+                    : t === "dark" && "text-gray-500"
                 }
               />
             }

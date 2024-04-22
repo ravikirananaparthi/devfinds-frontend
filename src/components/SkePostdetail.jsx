@@ -5,7 +5,7 @@ import { GoComment } from "react-icons/go";
 
 function SkePostdetail(props) {
     return (
-        <div className="flex items-center justify-center min-h-screen bg-gray-100">
+        <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-[#4b6cb7] to-[#182848]">
             <div className="max-w-3xl w-full p-8 bg-white rounded-2xl shadow-lg">
                 {/* User Info */}
                 <div className="flex items-center mb-4">

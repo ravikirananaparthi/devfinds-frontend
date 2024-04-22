@@ -9,7 +9,7 @@ const UserList = ({ users }) => {
   const { user } = useContext(Context);
   const [requestSent, setRequestSent] = useState({});
   const [fetchUsers, setFetchUsers] = useState(false);
-
+  const { t } = useContext(Context);
   const sendFriendRequest = async (userId) => {
     try {
       await axios.post(
@@ -28,8 +28,11 @@ const UserList = ({ users }) => {
   };
 
   return (
-    <div className="bg-white p-4 rounded-xl shadow-md mb-4  ">
-      <h1 className="text-2xl font-bold mb-4 text-black">Users</h1>
+    <div
+      className=" p-4 rounded-xl shadow-md mb-4  "
+      data-theme={t.includes("light") ? "light" : "night"}
+    >
+      <h1 className="text-2xl font-bold mb-4 ">Users</h1>
       <button
         className="text-blue-500 cursor-pointer flex items-center"
         onClick={() => setFetchUsers(!fetchUsers)}
@@ -44,7 +47,7 @@ const UserList = ({ users }) => {
           {users.map((userItem) => (
             <div
               key={userItem._id}
-              className="flex items-center border-b py-2 hover:bg-gray-100 relative"
+              className="flex items-center border-b py-2 hover:bg-gray-500 relative"
             >
               {userItem.image ? (
                 <img
@@ -53,15 +56,12 @@ const UserList = ({ users }) => {
                   className="h-10 w-10 rounded-full object-cover mr-2"
                 />
               ) : (
-                <FaUserCircle
-                  size={50}
-                  className="h-10 w-10 text-gray-500 mr-2"
-                />
+                <FaUserCircle size={50} className="h-10 w-10  mr-2" />
               )}
 
               <Link
                 to={`/app/userprofile/${userItem._id}`}
-                className="text-black font-semibold cursor-pointer"
+                className=" font-semibold cursor-pointer"
               >
                 {userItem.name}
               </Link>
@@ -84,14 +84,14 @@ const UserList = ({ users }) => {
                   {userItem.status === "" && !requestSent[userItem._id] && (
                     <button
                       onClick={() => sendFriendRequest(userItem._id)}
-                      className="bg-blue-500 text-white px-4 py-2 rounded-md ml-2"
+                      className="bg-blue-500  px-4 py-2 rounded-md ml-2"
                     >
                       Send Request
                     </button>
                   )}
                   {requestSent[userItem._id] && (
                     <button
-                      className="bg-blue-500 text-white px-4 py-2 rounded-md ml-2 flex items-center"
+                      className="bg-blue-500  px-4 py-2 rounded-md ml-2 flex items-center"
                       disabled
                     >
                       <RiUserReceivedFill className="mr-1" />

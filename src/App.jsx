@@ -20,6 +20,9 @@ import Proske from "./components/Proske";
 import Googleregister from "./pages/Googleregister";
 import Landing from "./pages/Landing";
 import Navbar from "./components/NavBar.jsx";
+import SkePostdetail from "./components/SkePostdetail.jsx";
+import TrendingPosts from "./components/Trendingposts.jsx";
+import Trending from "./pages/Trending.jsx";
 
 const ser = "https://devfinds-backend.onrender.com";
 
@@ -32,7 +35,7 @@ function App(props) {
   const { isAuthenticated, setUser, setAuth, setLoader, setfetch } =
     useContext(Context);
   const [notifications, setNotifications] = useState([]);
-  const [darkMode, setDarkMode] = useState(false);
+
   const toggleTheme = () => {
     setDarkMode(!darkMode);
   };
@@ -46,7 +49,6 @@ function App(props) {
         setUser(res.data.user);
         setAuth(true);
         setLoader(false);
-        setfetch(true);
       })
       .catch((error) => {
         setUser({});
@@ -54,6 +56,11 @@ function App(props) {
         setLoader(false);
       });
   }, [isAuthenticated]);
+  const token = localStorage.getItem('token') 
+  if (token) {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  }
+
   return (
     <Router>
       <Routes>
@@ -79,6 +86,8 @@ function ProtectedRoutes() {
         <Route path="/notifications" element={<Notifications />} />
         <Route path="/message" element={<Dm />} />
         <Route path="/register/google" element={<Googleregister />} />
+        <Route path="/hi" element={<TrendingPosts/>} />
+        <Route path='/trending' element={<Trending/>}/>
       </Routes>
       <Bottom />
       <Toaster />

@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import {
   getStorage,
   ref,
   uploadBytesResumable,
   getDownloadURL,
 } from "firebase/storage";
-import { app } from "../main";
+import { Context, app } from "../main";
 import axios from "axios";
 import LinearProgress from "@mui/material/LinearProgress";
 import { Button, Card, CardContent } from "@mui/material";
@@ -24,6 +24,8 @@ function Posts() {
   const [activeButton, setActiveButton] = useState(0);
   const [tof, setTof] = useState("pic");
   const [toupload, settoupload] = useState(false);
+  const [topost,setTopost]=useState(false);
+  const {isAuthenticated}=useContext(Context);
   const handleClick = (index) => {
     setActiveButton(index);
     if (index == 0) {
@@ -99,7 +101,7 @@ function Posts() {
       alert("Failed to create post");
     }
   };
-
+  if (!isAuthenticated) return <Navigate to={"/"} />;
   return (
     <div className="flex justify-center items-center h-screen area">
       <ul class="circles">
@@ -128,7 +130,7 @@ function Posts() {
         </div>
         </Link>
       </div>
-      <Card className="w-full lg:w-2/3 xl:w-1/2 p-8 bg-white shadow-lg rounded-lg mt-10 z-10">
+      <Card className="w-full lg:w-2/3 xl:w-1/2 p-8  shadow-lg rounded-lg mt-10 z-10">
         <CardContent>
           <h2 className="text-2xl font-bold text-center mb-6">
             Create a New Post

@@ -70,13 +70,13 @@ function Share({ post, onClose }) {
   };
 
   return (
-    <div className="fixed bottom-0  md:h-lhv md md:left-0 bg-gray-700 backdrop-blur-lg  rounded-t-xl shadow-lg p-4 transition-transform transform translate-y-0 w-full md:w-[25rem] xl:w-[33.25rem]  h-[550px] max-h-full md:h-[40rem] ">
+    <div className="fixed bottom-0  md:h-lhv  md:left-[360px] lg:left-[650px] lg:top-[200px] bg-gray-700 backdrop-blur-lg  rounded-t-3xl shadow-lg p-4 transition-transform transform translate-y-0 w-full md:w-[25rem] xl:w-[33.25rem]  h-[550px]  max-h-full md:h-[40rem] ">
 
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-lg font-semibold text-white">Share with Friends</h2>
         <button
           onClick={(e) => handlePopupClose(e)}
-          className="text-white hover:text-red-500 focus:outline-none"
+          className="text-white hover:text-red-500 focus:outline-none rounded-full hover:bg-slate-600 p-3"
         >
           <svg
             className="w-6 h-6"
@@ -106,7 +106,7 @@ function Share({ post, onClose }) {
         <IoSearch size={25} className="cursor-pointer" />
       </div>
       </div>
-      <div className="overflow-y-auto max-h-[400px] pb-20 md:pb-0">
+      <div className="overflow-y-auto max-h-[400px] pb-20 ">
         {/* List of friends */}
         {filteredFriends.map((friend, index) => (
           <div

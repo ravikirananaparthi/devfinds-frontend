@@ -21,7 +21,7 @@ export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const googleProvider = new GoogleAuthProvider();
 
-export const server ="https://devfinds-backend.onrender.com/api/v1/";
+export const server = "https://devfinds-backend.onrender.com/api/v1/";
 
 console.log(server);
 
@@ -31,7 +31,8 @@ const Appwraper = () => {
   const [isAuthenticated, setAuth] = useState(false);
   const [loader, setLoader] = useState(false);
   const [user, setUser] = useState({});
-  const [fetch, setfetch] = useState(false);
+  const [posts, setPosts] = useState([]);
+  const [t, st] = useState("light");
   return (
     <Context.Provider
       value={{
@@ -41,17 +42,19 @@ const Appwraper = () => {
         setLoader,
         user,
         setUser,
-        fetch,
-        setfetch,
+        posts,
+        setPosts,
+        t,
+        st,
       }}
     >
-      <App />
+      <App className='bg-gradient-to-r from-[#4b6cb7] to-[#182848]'/>
     </Context.Provider>
   );
 };
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <Appwraper />
+    <Appwraper className='bg-gradient-to-r from-[#4b6cb7] to-[#182848]'/>
   </React.StrictMode>
 );

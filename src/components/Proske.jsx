@@ -7,10 +7,10 @@ import { GoComment } from "react-icons/go";
 
 const Proske = () => {
   return (
-    <div className="relative flex items-center justify-center min-h-screen  bg-gray-100 bg-gradient-to-br from-puk via-slate-400 to-puk">
+    <div className="relative flex items-center justify-center min-h-screen  bg-gradient-to-r from-[#4b6cb7] to-[#182848]">
       <div className="container p-4 mx-auto md:p-8 ">
         <div className="grid gap-4 md:grid-cols-3 ">
-          <div className="md:col-span-1 h-auto md:h-[5in] lg:max-h-[5in] flex flex-col items-center backdrop-blur-lg bg-gray-700 rounded-xl sm:sticky top-0"></div>
+          <div className="md:col-span-1 h-auto md:h-[5in] lg:max-h-[5in] flex flex-col items-center backdrop-blur-lg bg-gray-700 rounded-xl sm:sticky mt-16"></div>
 
           <div className="p-4 rounded-xl shadow md:col-span-2  ">
             <h1 className="mb-4 text-2xl font-bold text-black">Posts page</h1>

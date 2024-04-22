@@ -21,7 +21,7 @@ function Notifications() {
   const [rejected, setRejected] = useState(false);
   const [req, setreq] = useState([]);
   const [posting, setposting] = useState([]);
-
+  const {isAuthenticated,t}=useContext(Context);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -115,13 +115,13 @@ function Notifications() {
   if (error) {
     return <div>Error: {error}</div>;
   }
-
+  if (!isAuthenticated) return <Navigate to={"/"} />;
   return (
     <div className="">
-      <div className="bg-white shadow-lg rounded-lg overflow-hidden w-full md:w-full lg:w-full mt-16">
-        <div className="bg-gray-100 p-4 border-b">
-          <h2 className="text-lg font-semibold text-black">Notifications</h2>
-          <p className="text-gray-700">
+      <div className=" shadow-lg rounded-lg overflow-hidden w-full md:w-full lg:w-full mt-16">
+        <div className="p-4 border-b" data-theme={t.includes('light') ? 'light' : 'night'}>
+          <h2 className="text-lg font-semibold ">Notifications</h2>
+          <p className="">
             You have {notifications.length + friendRequests.length} unread
             Notifications
           </p>
@@ -132,8 +132,9 @@ function Notifications() {
             <div
               key={index}
               className="flex flex-col items-center mb-4 border-t border-b py-4"
+              data-theme={t.includes('light') ? 'light' : 'night'}
             >
-              <div className="rounded-full bg-blue-500 text-white flex items-center justify-center w-10 h-10 mb-3">
+              <div className="rounded-full bg-blue-500  flex items-center justify-center w-10 h-10 mb-3">
                 {/* Add user icon */}
                 {request.image ? (
                   <img
@@ -147,7 +148,7 @@ function Notifications() {
               </div>
               <div className="w-full">
                 <div className="flex items-center justify-center mb-2">
-                  <p className="text-lg text-black ">
+                  <p className="text-lg ">
                     <Link to={`/app/userprofile/${req[index]}`}>
                       <span className="hover:underline cursor-pointer font-semibold">
                         {request.name}
@@ -172,29 +173,17 @@ function Notifications() {
                     <span className="ml-2">Reject</span>
                   </button>
                 </div>
-                {accepted && (
-                  <div className="friend-request-animation-green text-green-500 animate-slide-in-green">
-                    <p>{`${request.name} and you are friends now`}</p>
-                  </div>
-                )}
-                {/* Animation for rejecting friend request */}
-                {rejected && (
-                  <div className="friend-request-animation-red text-red-500 animate-slide-in-red">
-                    <p>Friend Request deleted</p>
-                  </div>
-                )}
               </div>
             </div>
           ))}
-
-          {/* Display notifications */}
           {notifications?.map((notification, index) => (
             <Link to={`/app/posts/${posting[index]}`}>
               <div
                 key={index}
-                className="flex items-center mb-4 border-t border-b py-4"
+                className="flex items-center mb-4 border-t border-b py-4 p-4 rounded-lg"
+                data-theme={t.includes('light') ? 'light' : 'night'}
               >
-                <div className=" text-white flex items-center justify-center  mr-3">
+                <div className="  flex items-center justify-center  mr-3">
                   {/* Add image component here */}
                   {notification.image ? (
                     <Avatar
@@ -213,16 +202,16 @@ function Notifications() {
                       <FcLike className="mr-2" />
                     )}
                     {notification.type === "comment" && (
-                      <MdModeComment className="mr-2 text-black" />
+                      <MdModeComment className="mr-2 " />
                     )}
-                    <p className="text-sm text-gray-700">
+                    <p className="text-sm ">
                       {notification.message}
                     
                     </p>
                     </div>
                     <FaArrowCircleRight
                       size={35}
-                      className="text-black hover:text-gray-400 ml-24"
+                      className=" hover:text-gray-400 ml-24"
                     />
                   </div>
                   <p className="text-xs text-gray-500">

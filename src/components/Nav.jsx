@@ -24,7 +24,9 @@ const Navbar = (props) => {
   
       toast.success('Logged Out Successfully');
       setAuth(false);
+      localStorage.removeItem('token');
       axios.defaults.headers.common['Authorization'] = '';
+
     } catch (error) {
       toast.error(error.response?.data?.message || 'Logout failed'); // Handle potential errors
     } finally {
@@ -95,12 +97,14 @@ const Navbar = (props) => {
             )}
 
             {isAuthenticated ? (
+              <Link to={'/'}>
               <button
                 onClick={logOutHandler}
                 className="bg-gradient-to-r from-amber-200 to-yellow-500 text-black rounded-md px-4 py-2 transition duration-300 ease-in-out hover:from-amber-100 hover:to-yellow-300"
               >
                 Logout
               </button>
+              </Link>
             ) : (
               <Link to={"/app/login"}>
                 <button className="bg-gradient-to-r from-amber-200 to-yellow-500 text-black rounded-md px-4 py-2 transition duration-300 ease-in-out hover:from-amber-200 hover:to-yellow-500">

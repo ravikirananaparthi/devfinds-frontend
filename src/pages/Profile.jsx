@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { FaRegUser } from "react-icons/fa";
 import { SlCalender, SlGraph } from "react-icons/sl";
@@ -8,7 +8,7 @@ import View from "../components/View";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { GoComment } from "react-icons/go";
 import { FaCirclePlus } from "react-icons/fa6";
-import { app } from "../main";
+import { Context, app } from "../main";
 import { IoMail } from "react-icons/io5";
 import {
   getStorage,
@@ -22,6 +22,8 @@ import Proske from "../components/Proske";
 import { GrTechnology } from "react-icons/gr";
 import { FaUserSecret } from "react-icons/fa";
 import { server } from "../main";
+import { Navigate } from "react-router-dom";
+import ImageViewer from "react-simple-image-viewer";
 function Profile() {
   const [user, setUser] = useState(null);
   const [posts, setPosts] = useState([]);
@@ -31,6 +33,9 @@ function Profile() {
   const [showPopup, setShowPopup] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [imgurl, setImgUrl] = useState("");
+  const { isAuthenticated, t } = useContext(Context);
+  const [isViewerOpen, setIsViewerOpen] = useState(false);
+  const [currentImage, setCurrentImage] = useState(0);
   const handlePostToBackend = async (imageUrl) => {
     try {
       const response = await axios.post(
@@ -52,12 +57,9 @@ function Profile() {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await axios.get(
-          `${server}users/me`,
-          {
-            withCredentials: true,
-          }
-        );
+        const response = await axios.get(`${server}users/me`, {
+          withCredentials: true,
+        });
         setUser(response.data.user);
         console.log(response.data.user);
         if (response.data.user && response.data.user._id) {
@@ -75,13 +77,10 @@ function Profile() {
     if (userId) {
       const fetchPosts = async () => {
         try {
-          const response = await axios.get(
-            `${server}posts/user/${userId}`,
-            {
-              withCredentials: true,
-            }
-          );
-          setPosts(response.data.posts);
+          const response = await axios.get(`${server}posts/user/${userId}`, {
+            withCredentials: true,
+          });
+          setPosts(response.data.posts.reverse());
         } catch (error) {
           console.error("Error fetching posts:", error);
         } finally {
@@ -103,12 +102,9 @@ function Profile() {
   const handleDeletePost = async (postId, e) => {
     e.stopPropagation();
     try {
-      await axios.delete(
-        `${server}posts/delete/${postId}`,
-        {
-          withCredentials: true,
-        }
-      );
+      await axios.delete(`${server}posts/delete/${postId}`, {
+        withCredentials: true,
+      });
       // Filter out the deleted post from the posts state
       setPosts(posts.filter((post) => post._id !== postId));
     } catch (error) {
@@ -155,21 +151,31 @@ function Profile() {
     const fileName = decodeURIComponent(lastSegment.split("?")[0]);
     return fileName;
   };
+  const openImageViewer = (index) => {
+    setCurrentImage(index);
+    setIsViewerOpen(true);
+  };
+
+  const closeImageViewer = () => {
+    setCurrentImage(0);
+    setIsViewerOpen(false);
+  }; 
   if (loading) {
     return <Proske />;
   }
+  if (!isAuthenticated) return <Navigate to={"/"} />;
   console.log(posts);
   return (
-    <div className="bg-gradient-to-br from-ravi via-chakri to-jaya ">
-      <div class="sm:overflow-y-auto md:overflow-y-hidden md:flex flex-col md:flex-row h-screen bg-ravi">
+    <div className="">
+      <div class="sm:overflow-y-auto md:overflow-y-hidden md:flex flex-col md:flex-row h-screen ">
         <div class="md:left overflow-y-auto md:w-1/3 m-4 md:my-auto ">
-          <div className="p-4 bg-chakri text-white rounded-lg shadow max-h-[576px] overflow-auto sm:sticky mt-28 md:mt-20">
+          <div className="p-4 bg-gray-700 text-white rounded-lg shadow max-h-[576px] overflow-auto sm:sticky mt-28 md:mt-20">
             <div className="flex flex-col mb-4 h-5/6">
               <div className=" mb-4 flex justify-between">
-              <h1 className="text-2xl font-semibold">User Profile Page</h1>
-              <div>
-                <IoMail size={32} className="ml-4"/>
-              </div>
+                <h1 className="text-2xl font-semibold">My Profile</h1>
+                <div>
+                  <IoMail size={32} className="ml-4" />
+                </div>
               </div>
               <div className="mb-4 ">
                 <div style={{ position: "relative", display: "inline-block" }}>
@@ -177,13 +183,23 @@ function Profile() {
                     <img
                       src={user.image}
                       alt="Profile Picture"
-                      className="p-1 border-2 border-green-500 border-solid rounded-full object-cover"
+                      className="p-1 border-2 border-indigo-600 border-solid rounded-full object-cover cursor-pointer"
                       style={{ width: "150px", height: "150px" }}
+                      onClick={() => openImageViewer(0)}
                     />
                   ) : (
                     <FaUserCircle
                       size={100}
-                      className="p-1 text-black border-2 border-green-500 border-solid rounded-full"
+                      className="p-1  border-2  border-indigo-600 border-solid rounded-full"
+                    />
+                  )}
+                  {isViewerOpen && (
+                    <ImageViewer
+                      src={[user.image]}
+                      currentIndex={currentImage}
+                      disableScroll={false}
+                      closeOnClickOutside={true}
+                      onClose={closeImageViewer}
                     />
                   )}
                   <button>
@@ -248,17 +264,18 @@ function Profile() {
             </div>
           </div>
         </div>
-        <div class="right flex-1 overflow-y-auto md:h-auto bg-ravi">
-        <div className="md:p-4 rounded-xl  m-5 mb-24 md:mb-4 md:mt-20 bg-jaya">
-          <h2 className="text-2xl font-semibold mb-4 text-white text-center">
-              Posts Page
-          </h2>
+        <div class="right flex-1 overflow-y-auto md:h-auto" >
+          <div className="md:p-4 rounded-xl  m-5 mb-24 md:mb-4 md:mt-20" >
+            <h2 className="text-2xl font-semibold mb-4 text-white text-center">
+              My Posts 
+            </h2>
             <div className="grid grid-cols-1 gap-4 text-sm md:text-lg">
               {posts.map((post) => (
                 <div
                   key={post._id}
-                  className="bg-white p-6 rounded-xl shadow-xl"
+                  className=" p-6 rounded-xl shadow-xl"
                   onClick={() => handlePostClick(post)}
+                  data-theme={t.includes('light') ? 'light' : 'night'}
                 >
                   <div className="flex items-center mb-2">
                     {post.user.image ? (
@@ -270,14 +287,14 @@ function Profile() {
                     ) : (
                       <FaUserCircle className="h-14 w-14 mr-2" />
                     )}
-                    <p className="text-lg font-semibold text-black">
+                    <p className="text-lg font-semibold ">
                       {post.user.name}
                     </p>
                   </div>
-                  <h2 className="text-xl font-semibold mb-2 text-black">
+                  <h2 className="text-xl font-semibold mb-2 ">
                     {post.title}
                   </h2>
-                  <p className="text-gray-600 mb-4 ">{post.description}</p>
+                  <p className=" mb-4 ">{post.description}</p>
                   {post.tof == "pic" && post?.image && (
                     <div className="aspect-auto w-full mb-7 border border-solid rounded-lg border-gray-400  md:overflow-hidden">
                       <div className="">
@@ -326,15 +343,15 @@ function Profile() {
                   )}
                   <div className="flex items-center justify-around">
                     <div className="flex items-center">
-                      <CiHeart size={20} className="cursor-pointer mr-2" />
-                      <p className="text-gray-500">{post.likes.length}</p>
+                      <CiHeart size={20} className="cursor-pointer mr-2 text-red-500" />
+                      <p className="">{post.likes.length}</p>
                     </div>
                     <div className="flex items-center">
                       <GoComment
                         size={20}
                         className="text-blue-500 cursor-pointer hover:text-green-500 mr-2"
                       />
-                      <p className="text-gray-500">{post.comments.length}</p>
+                      <p className="">{post.comments.length}</p>
                     </div>
                     <FaShare
                       size={20}
@@ -356,8 +373,8 @@ function Profile() {
                 </div>
               ))}
             </div>
-            </div>
           </div>
+        </div>
       </div>
       {/* Render popup */}
       {showPopup && (

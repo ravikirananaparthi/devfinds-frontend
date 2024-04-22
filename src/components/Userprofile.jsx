@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { FaUserCircle } from "react-icons/fa";
 import { SlCalender, SlGraph } from "react-icons/sl";
@@ -14,7 +14,7 @@ import Proske from "./Proske";
 import ReactPlayer from "react-player";
 import { GrTechnology } from "react-icons/gr";
 import { FaUserSecret } from "react-icons/fa";
-import { server } from "../main";
+import { Context, server } from "../main";
 function Userprofile() {
   const [user, setUser] = useState(null);
   const [posts, setPosts] = useState([]);
@@ -22,6 +22,7 @@ function Userprofile() {
   const [selectedPost, setSelectedPost] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
   const { userid } = useParams();
+  const {t}=useContext(Context);
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -82,12 +83,12 @@ function Userprofile() {
   };
   console.log(posts);
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-puk via-slate-700 to-puk">
+    <div className="flex items-center justify-center min-h-screen ">
       <div className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-          <div className="p-4 bg-gray-700 text-white rounded-lg shadow col-span-1 max-h-[576px] overflow-auto sm:sticky t-0  top-0 z-10">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3 mt-16">
+          <div className="p-4 bg-gray-700 text-white rounded-lg shadow col-span-1 max-h-[576px] overflow-auto sm:sticky t-0  top-0">
             <div className="flex flex-col mb-4 h-5/6">
-              <h1 className="text-2xl font-semibold mb-4">User Profile Page</h1>
+              <h1 className="text-2xl font-semibold mb-4">Users Profile Page</h1>
               <div className="mb-4">
                 {user && user.image ? (
                   <img
@@ -141,14 +142,15 @@ function Userprofile() {
               </div>
             </div>
           </div>
-          <div className="p-4 bg-indigo-300 rounded-lg shadow col-span-2">
+          <div className="  rounded-lg shadow col-span-2  ">
             <h2 className="text-2xl font-semibold mb-4">Posts Page</h2>
-            <div className="grid grid-cols-1 gap-4 text-sm md:text-lg">
+            <div className="grid grid-cols-1 gap-3 text-sm md:text-lg">
               {posts.map((post) => (
                 <div
                   key={post._id}
-                  className="bg-white p-6 rounded-xl shadow-xl cursor-pointer"
+                  className=" p-6 rounded-xl shadow-xl cursor-pointer"
                   onClick={() => handlePostClick(post)}
+                  data-theme={t.includes('light') ? 'light' : 'night'}
                 >
                   <div className="flex items-center mb-2">
                     {post.user.image ? (
@@ -163,7 +165,7 @@ function Userprofile() {
                     <p className="text-lg font-semibold">{post.user.name}</p>
                   </div>
                   <h2 className="text-xl font-semibold mb-2">{post.title}</h2>
-                  <p className="text-gray-600 mb-4">{post.description}</p>
+                  <p className=" mb-4">{post.description}</p>
                   {post.tof == "pic" && post?.image && (
                     <img
                       src={post?.image}
@@ -205,17 +207,17 @@ function Userprofile() {
                       <span>{getPostFileName(post.image)}</span>
                     </a>
                   )}
-                  <div className="flex items-center justify-around">
+                  <div className="flex items-center justify-around mt-3">
                     <div className="flex items-center">
                       <CiHeart size={20} className="cursor-pointer mr-2" />
-                      <p className="text-gray-500">{post.likes.length}</p>
+                      <p className="">{post.likes.length}</p>
                     </div>
                     <div className="flex items-center">
                       <GoComment
                         size={20}
                         className="text-blue-500 cursor-pointer hover:text-green-500 mr-2"
                       />
-                      <p className="text-gray-500">{post.comments.length}</p>
+                      <p className="">{post.comments.length}</p>
                     </div>
                     <FaShare
                       size={20}
@@ -225,7 +227,7 @@ function Userprofile() {
                   </div>
                   <div className="flex items-center justify-between ">
                     <div className="font-semibold">
-                      <button className="flex items-center text-red-500 bg-transparent py-1 px-2 rounded-lg transition duration-300 hover:bg-red-500 hover:text-white">
+                      <button onClick={e=>{e.stopPropagation();}}className="flex items-center text-red-500 bg-transparent py-1 px-2 rounded-lg transition duration-300 hover:bg-red-500 hover:text-white">
                         <MdReportProblem className="mr-2" />
                         <span>Report Post</span>
                       </button>
@@ -235,6 +237,7 @@ function Userprofile() {
               ))}
             </div>
           </div>
+          <div className="mt-10"></div>
         </div>
       </div>
       {/* Render popup */}

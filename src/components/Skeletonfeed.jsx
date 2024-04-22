@@ -7,10 +7,10 @@ import { GoComment } from "react-icons/go";
 
 const Skeletonfeed = () => {
   return (
-    <div className="relative flex items-center justify-center min-h-screen  bg-gray-100 bg-gradient-to-br from-puk via-slate-400 to-puk">
+    <div className="relative flex items-center justify-center min-h-screen bg-gradient-to-r from-[#4b6cb7] to-[#182848] ">
       <div className="container p-4 mx-auto md:p-8 ">
         <div className="grid gap-4 md:grid-cols-3 ">
-          <div className="md:col-span-1 h-auto md:h-[5in] lg:max-h-[5in] flex flex-col items-center backdrop-blur-lg bg-gray-700 rounded-xl sm:sticky top-0">
+          <div className="md:col-span-1 h-auto md:h-[5in] lg:max-h-[5in] flex flex-col items-center backdrop-blur-lg bg-gray-700 rounded-xl sm:sticky mt-16">
             <div className="bg-white rounded-full flex ml-3 mt-3 items-center sm:w-full md:w-[190px] md:m-3 lg:w-[350px]">
               <input
                 type="text"

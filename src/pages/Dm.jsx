@@ -7,15 +7,18 @@ import { IoSearch } from "react-icons/io5";
 import { FaUserCircle } from "react-icons/fa";
 import { server } from "../main";
 import Avatar from "@mui/material/Avatar";
+import { Navigate } from "react-router-dom";
 function Dm() {
-  const { user } = useContext(Context);
+  const { user,isAuthenticated } = useContext(Context);
   const [friends, setFriends] = useState([]);
   const [filteredFriends, setFilteredFriends] = useState([]);
   const [selectedFriend, setSelectedFriend] = useState(null);
   const [showFriendsList, setShowFriendsList] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
+
   const socket = useRef();
   const ser="https://devfinds-backend.onrender.com";
+  
   useEffect(() => {
     if (user) {
       socket.current = io(`${ser}`);
@@ -56,6 +59,7 @@ function Dm() {
     );
     setFilteredFriends(filtered);
   };
+  if (!isAuthenticated) return <Navigate to={"/"} />;
   return (
     <div className="flex h-screen mt-16 -z-40">
       {/* Sidebar */}
@@ -64,7 +68,8 @@ function Dm() {
           showFriendsList ? "block" : "hidden"
         } md:block w-full md:w-1/3 overflow-y-auto`}
       >
-        <div className="bg-white rounded-full flex ml-5 mt-3 mb-4 items-center sm:w-full md:w-[190px] md:m-3 lg:w-[350px]">
+      <div className="m-4"></div>
+        <div className="bg-white rounded-full flex ml-5 mt-3 mb-10 items-center sm:w-full md:w-[190px] md:m-3 lg:w-[350px]  ">
           <input
             type="text"
             placeholder="Search"
@@ -72,10 +77,10 @@ function Dm() {
             onChange={handleSearchChange}
             className="w-full py-2 px-3 bg-transparent cursor-pointer text-black focus:outline-none"
           />
-          <IoSearch size={25} className="cursor-pointer" />
+          <IoSearch size={25} className="cursor-pointer text-black" />
         </div>
         <h2 className="text-xl font-semibold mb-4 text-white">Friends</h2>
-        <div className="overflow-y-auto h-full">
+        <div className=" h-full">
           <ul>
             {filteredFriends.map((friend) => (
               <li
