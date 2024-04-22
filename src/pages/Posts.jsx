@@ -18,14 +18,15 @@ function Posts() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [imgurl, setImgUrl] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [previewImage, setPreviewImage] = useState(null);
   const [activeButton, setActiveButton] = useState(0);
   const [tof, setTof] = useState("pic");
-  const [toupload, settoupload] = useState(false);
+  const [toupload, settoupload] = useState(true);
   const [topost,setTopost]=useState(false);
   const {isAuthenticated}=useContext(Context);
+  const [mg, setmg] = useState(false);
   const handleClick = (index) => {
     setActiveButton(index);
     if (index == 0) {
@@ -249,7 +250,7 @@ function Posts() {
             disabled={loading || uploadProgress < 100}
             fullWidth
           >
-            {loading && toupload ? "Creating Post..." : "Create Post"}
+            {loading && toupload && mg ? "Creating Post..." : "Create Post"}
           </Button>
         </CardContent>
       </Card>

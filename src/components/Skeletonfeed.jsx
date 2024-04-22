@@ -4,6 +4,7 @@ import { RiFireFill } from "react-icons/ri";
 import { FaHistory, FaShare } from "react-icons/fa";
 import { CiHeart } from "react-icons/ci";
 import { GoComment } from "react-icons/go";
+import { Link } from "react-router-dom";
 
 const Skeletonfeed = () => {
   return (
@@ -77,9 +78,11 @@ const Skeletonfeed = () => {
 
             {/* Footer */}
             <footer className="mt-auto mb-9 flex justify-center">
+            <Link to={'/app/posts'}>
               <button className="py-2 px-10 md:px-16 lg:px-36 font-bold text-white bg-blue-500 rounded-lg hover:bg-blue-700 transition duration-300 ease-in-out focus:outline-none">
                 + Post
               </button>
+              </Link>
             </footer>
           </div>
 
